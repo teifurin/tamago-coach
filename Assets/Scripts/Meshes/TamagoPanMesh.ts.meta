@@ -1,0 +1,76 @@
+- !<AssetImportMetadata/b4c7cf73-b90e-449e-8b6b-0c0e18e1ac55>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 141bfef3-1d8b-490c-814f-9ff0b4c25d00
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 141bfef3-1d8b-490c-814f-9ff0b4c25d00
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 3bc617ae-7193-4a55-ba0d-fee365cb4ac2
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/3bc617ae-7193-4a55-ba0d-fee365cb4ac2>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  VersionPrerelease: ""
+  UpdateOrder: 0
+  ComponentUid: ebf3f607-c8c5-4ed5-91e5-744ac4e69c9f
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    depth: false
+    floorThickness: false
+    handleLength: false
+    handleThickness: false
+    handleWidth: false
+    innerLength: false
+    innerWidth: false
+    material: false
+    rimHeight: false
+    rimOverhang: false
+    wallThickness: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - material: !<reference.Material> 00000000-0000-0000-0000-000000000000
+      innerWidth: !<float> 13.000000
+      innerLength: !<float> 18.000000
+      depth: !<float> 3.000000
+      wallThickness: 0.800000
+      floorThickness: 0.600000
+      rimHeight: 0.500000
+      rimOverhang: 0.300000
+      handleLength: !<float> 12.000000
+      handleWidth: 2.500000
+      handleThickness: 1.500000
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - // @input Asset.Material material
+    - // @input float innerWidth = 13
+    - // @input float innerLength = 18
+    - // @input float depth = 3
+    - // @input float wallThickness = 0.8
+    - // @input float floorThickness = 0.6
+    - // @input float rimHeight = 0.5
+    - // @input float rimOverhang = 0.3
+    - // @input float handleLength = 12
+    - // @input float handleWidth = 2.5
+    - // @input float handleThickness = 1.5

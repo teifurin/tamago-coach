@@ -1,0 +1,79 @@
+- !<AssetImportMetadata/9c9b7593-9113-4905-8ef7-f8247840fd89>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 1b4d34fe-f875-4106-9c77-cf6c1e3a794a
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 1b4d34fe-f875-4106-9c77-cf6c1e3a794a
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 5bf04c8a-a92a-46a3-a5a2-dfc5e436433e
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/5bf04c8a-a92a-46a3-a5a2-dfc5e436433e>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  VersionPrerelease: ""
+  UpdateOrder: 0
+  ComponentUid: 214a6aa1-5b57-4e95-9229-61c8201abca2
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    backLabel: false
+    backSizeCm: false
+    buttonGapCm: false
+    demoLabel: false
+    demoSwitchAnchor: false
+    labelColor: false
+    labelSize: false
+    nextLabel: false
+    nextSizeCm: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - demoSwitchAnchor: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      nextSizeCm: !<Vec2> {x: 8.000000, y: 6.000000}
+      backSizeCm: !<Vec2> {x: 6.000000, y: 4.000000}
+      buttonGapCm: 1.200000
+      nextLabel: Next
+      backLabel: Back
+      demoLabel: Demo ×10
+      labelSize: !<float> 60.000000
+      labelColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">TamagoCoachControlsUI – Next, Back, Demo x10</span>"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">References</span>"}'
+    - '// @ui {"widget":"group_start", "label":"References"}'
+    - '// @input SceneObject demoSwitchAnchor {"hint":"Authored anchor at the far-left corner of the counter for the Demo x10 switch row"}'
+    - '// @ui {"widget":"group_end"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">Settings</span>"}'
+    - '// @ui {"widget":"group_start", "label":"Settings"}'
+    - '// @input vec2 nextSizeCm = "{8,6}" {"hint":"Next button size, cm (width, height)"}'
+    - '// @input vec2 backSizeCm = "{6,4}" {"hint":"Back button size, cm (width, height)"}'
+    - '// @input float buttonGapCm = 1.2 {"hint":"Gap between the Next and Back buttons, cm", "widget":"slider", "min":0, "max":5, "step":0.1}'
+    - '// @input string nextLabel = "Next" {"hint":"Label on the Next button"}'
+    - '// @input string backLabel = "Back" {"hint":"Label on the Back button"}'
+    - '// @input string demoLabel = "Demo ×10" {"hint":"Label next to the demo-speed switch"}'
+    - '// @input float labelSize = 60 {"hint":"Button label text size (em-square; 60 ~ 1 cm cap height)", "widget":"slider", "min":40, "max":100, "step":1}'
+    - '// @input vec4 labelColor = "{1,1,1,1}" {"hint":"Label colour", "widget":"color"}'
+    - '// @ui {"widget":"group_end"}'

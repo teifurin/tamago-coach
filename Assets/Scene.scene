@@ -4,6 +4,9 @@
     - !<own> 00000000-0000-0065-0000-000000000064
     - !<own> 0005641c-028d-459a-0000-000000014b4d
     - !<own> f5d74682-203a-4970-81ea-9fa7b88c96bb
+    - !<own> 99e95ccf-cf81-4db8-ad80-65a0427d94a1
+    - !<own> 012f6188-f27c-4cb4-9e91-2fa8d8d1f07a
+    - !<own> 931d38db-78c8-4f9c-8b33-8b8c3566f8ad
   layers: !<Layers/267ee9a7-aff2-4f9d-9a49-f71214747d03>
     userLayers:
       - id: 1
@@ -191,6 +194,21 @@
     - !<own> 276368e3-f687-4cc6-947d-24de3a78c9af
   Components:
     []
+- !<SceneObject/012f6188-f27c-4cb4-9e91-2fa8d8d1f07a>
+  PrefabRemaps:
+    []
+  Name: LEAF Plugin Bridge
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 1cb1fcb2-ae9f-41f5-b48c-d2b6860d0b15
 - !<SceneObject/0451d993-a1f7-464e-9b69-32c0d9af8ed7>
   PrefabRemaps:
     []
@@ -236,6 +254,59 @@
     []
   Components:
     []
+- !<ScriptComponent/053a550c-6b86-41c3-8ed7-c55739e6c8eb>
+  PrefabRemaps:
+    []
+  Name: TamagoPanMesh
+  Enabled: true
+  ScriptAsset: !<reference> 141bfef3-1d8b-490c-814f-9ff0b4c25d00
+  ScriptInputsDefault:
+    innerWidth: true
+    innerLength: true
+    depth: true
+    wallThickness: true
+    floorThickness: true
+    rimHeight: true
+    rimOverhang: true
+    handleLength: true
+    handleWidth: true
+    handleThickness: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      material: !<reference.Material> 70d03593-c7b4-410a-ae5c-75cb82ee32dc
+      innerWidth: !<float> 13.000000
+      innerLength: !<float> 18.000000
+      depth: !<float> 3.000000
+      wallThickness: 0.800000
+      floorThickness: 0.600000
+      rimHeight: 0.500000
+      rimOverhang: 0.300000
+      handleLength: !<float> 12.000000
+      handleWidth: 2.500000
+      handleThickness: 1.500000
+  ScriptTypes:
+    "":
+      {}
+- !<ScriptComponent/07ed813a-9aa3-4a4c-98a0-5813a7537b8f>
+  PrefabRemaps:
+    []
+  Name: TamagoCoachBillboard
+  Enabled: true
+  ScriptAsset: !<reference> d17b0bf8-f0c7-4cc5-9fa0-4b7ceb0a25eb
+  ScriptInputsDefault:
+    tiltDeg: true
+    smoothing: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      tiltDeg: !<float> 30.000000
+      smoothing: 0.250000
+  ScriptTypes:
+    "":
+      {}
 - !<ScriptComponent/0847d2bb-a13f-4c4a-a404-169f67308f6f>
   PrefabRemaps:
     []
@@ -321,6 +392,29 @@
   ScriptTypes:
     "":
       {}
+- !<SceneObject/08a902b8-bf50-4298-92ca-c0c1d9f62ef1>
+  PrefabRemaps:
+    []
+  Name: StoveSet
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: -45.000000, z: -70.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> c670a835-3084-4228-9b53-8a85c1d0fac5
+    - !<own> d33295b8-bd49-4d0b-831f-5f1ac7b61559
+    - !<own> 8a2b325c-7583-4835-9b5f-4a4e43ab9bd4
+    - !<own> 894e7b55-0d73-4808-ba05-7b4535a568be
+    - !<own> c3338bd1-345e-4453-a6ec-de3a4982c49e
+    - !<own> cf8cf56d-cd58-47b3-a74c-645a33b7cb1b
+    - !<own> 3a703b5a-0126-4a6e-9563-cb505cc5c536
+    - !<own> f4c3c88d-e2f0-4930-b398-e67ea05192f5
+    - !<own> 16f81cb1-5eac-446b-95f7-a9e0529be7c4
+  Components:
+    - !<own> b2133bbc-dd51-4231-9017-afbb73556a53
 - !<SceneObject/08e3cc22-f2e1-49fb-9ddc-145fe6547ce3>
   PrefabRemaps:
     []
@@ -426,6 +520,38 @@
     - !<own> 9e373d68-993f-4c8f-83a0-6644f1d9fefd
   Components:
     []
+- !<ScriptComponent/0fcfccff-4778-45d3-8198-f69094989770>
+  PrefabRemaps:
+    []
+  Name: TamagoCoachRingUI
+  Enabled: true
+  ScriptAsset: !<reference> 557eb560-94b7-4edf-b244-ce14b5e54c76
+  ScriptInputsDefault:
+    centerSizeCm: true
+    titleOffsetCm: true
+    numberSize: true
+    smallSize: true
+    numberColor: true
+    timeColor: true
+    titleColor: true
+    pauseColor: true
+    pauseGlyph: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      centerSizeCm: !<float> 6.000000
+      titleOffsetCm: 4.300000
+      numberSize: !<float> 84.000000
+      smallSize: !<float> 54.000000
+      numberColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+      timeColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 1.000000, w: 0.900000}
+      titleColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+      pauseColor: !<Vec4> {x: 1.000000, y: 0.720000, z: 0.250000, w: 1.000000}
+      pauseGlyph: II
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/10f60da2-2196-40ad-9e72-8a6bc7e86f35>
   PrefabRemaps:
     []
@@ -483,6 +609,22 @@
   ScriptTypes:
     "":
       {}
+- !<ScriptComponent/11e43030-a267-4ec5-96a5-c1d09c5d933f>
+  PrefabRemaps:
+    []
+  Name: LeafIndex
+  Enabled: true
+  ScriptAsset: !<reference> cdbb1631-95f8-4795-9064-9e297f342dcc
+  ScriptInputsDefault:
+    {}
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      {}
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/126f3577-bc27-4a20-8d6e-a511bc459c49>
   PrefabRemaps:
     []
@@ -498,6 +640,21 @@
     - !<own> a6af4948-9adc-4052-ae22-db902dd2764e
   Components:
     []
+- !<SceneObject/16f81cb1-5eac-446b-95f7-a9e0529be7c4>
+  PrefabRemaps:
+    []
+  Name: RollArrow
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 3.000000, y: 2.300000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> d733cddf-39b6-4172-a4cc-9e60f10cb391
 - !<SceneObject/181c239f-175e-4912-94fc-d37a2599b2d6>
   PrefabRemaps:
     []
@@ -506,6 +663,37 @@
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 2.837150, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    []
+- !<ScriptComponent/1cb1fcb2-ae9f-41f5-b48c-d2b6860d0b15>
+  PrefabRemaps:
+    []
+  Name: MessagingBridge
+  Enabled: true
+  ScriptAsset: !<reference> 9aa407db-2872-4afc-a162-cf7faf2a0f29
+  ScriptInputsDefault:
+    {}
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      {}
+  ScriptTypes:
+    "":
+      {}
+- !<SceneObject/1f18b5fe-d9a8-4680-8b57-fa21cf575485>
+  PrefabRemaps:
+    []
+  Name: EggLayer
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
     Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
     Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
     HasSegmentScaleCompensation: false
@@ -796,6 +984,21 @@
     - !<own> 4051028a-c608-4a97-b3d5-1a3912a7c007
   Components:
     []
+- !<SceneObject/3a703b5a-0126-4a6e-9563-cb505cc5c536>
+  PrefabRemaps:
+    []
+  Name: DemoSwitchAnchor
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: -21.000000, y: 0.200000, z: -13.000000}
+    Rotation: {x: -50.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    []
 - !<SceneObject/3a794764-c758-4d72-9d89-bf3ed978113f>
   PrefabRemaps:
     []
@@ -991,6 +1194,53 @@
     - !<own> bf2095b6-c6f8-48c8-b840-e0a6cec0dc99
   Components:
     []
+- !<AudioComponent/59a9af2f-f870-44e8-a67b-d2aedf1b3d94>
+  PrefabRemaps:
+    []
+  Name: Audio
+  Enabled: true
+  AudioTrack: !<reference> 3ea86884-73c5-43b2-aac4-f9b0bb93631b
+  EnableAutoplayLoop: false
+  Volume: 1.000000
+  EnableMixToSnap: false
+  RecordVolume: 1.000000
+  EnableSpatialAudio: false
+  EnableDistanceEffect: false
+  CurveType: Logarithm
+  MinDistance: 0.000000
+  MaxDistance: 100.000000
+  EnableDirectivityEffect: false
+  EnablePositionEffect: false
+- !<ScriptComponent/5e41a8e8-d701-43d8-b949-9a37c912c872>
+  PrefabRemaps:
+    []
+  Name: TamagoCoachGrabBar
+  Enabled: true
+  ScriptAsset: !<reference> f0a19bda-6387-47ec-b2a1-c544aa371d2f
+  ScriptInputsDefault:
+    widthCm: true
+    heightCm: true
+    depthCm: true
+    barColor: true
+    hoverColor: true
+    colliderPaddingCm: true
+    debugCollider: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      stoveSet: !<reference.SceneObject> 08a902b8-bf50-4298-92ca-c0c1d9f62ef1
+      material: !<reference.Material> 70d03593-c7b4-410a-ae5c-75cb82ee32dc
+      widthCm: !<float> 30.000000
+      heightCm: 1.200000
+      depthCm: !<float> 3.000000
+      barColor: !<Vec4> {x: 0.550000, y: 0.720000, z: 0.920000, w: 1.000000}
+      hoverColor: !<Vec4> {x: 0.850000, y: 0.960000, z: 1.000000, w: 1.000000}
+      colliderPaddingCm: 1.500000
+      debugCollider: false
+  ScriptTypes:
+    "":
+      {}
 - !<ScriptComponent/5f153ad7-2baa-4fd9-a298-0dcfad86da3b>
   PrefabRemaps:
     []
@@ -1141,6 +1391,50 @@
     - !<own> 80574bd1-697b-4bb5-b9ce-13b340146d82
   Components:
     - !<own> ccf4d3bc-d3c2-4580-b9c5-62f164ef7eef
+- !<ScriptComponent/69f14459-806f-4fc5-a2d1-071fc24aaa72>
+  PrefabRemaps:
+    []
+  Name: TamagoCoachEgg
+  Enabled: true
+  ScriptAsset: !<reference> b3e34a94-2a52-4b06-b9c3-64b41bdf9c28
+  ScriptInputsDefault:
+    layerWidthCm: true
+    layerLengthCm: true
+    layerThicknessCm: true
+    freshColor: true
+    setColor: true
+    logColor: true
+    logLengthCm: true
+    logRadius1Cm: true
+    logRadius2Cm: true
+    logRadius3Cm: true
+    panInnerLengthCm: true
+    sliceCount: true
+    sliceGapCm: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      layerObject: !<reference.SceneObject> 1f18b5fe-d9a8-4680-8b57-fa21cf575485
+      logObject: !<reference.SceneObject> eedc7f48-4dc2-4a9a-beb4-e9435f0dc8e5
+      slicesObject: !<reference.SceneObject> cb2e796b-c6c0-4935-aff0-697d7bf0420d
+      material: !<reference.Material> 70d03593-c7b4-410a-ae5c-75cb82ee32dc
+      layerWidthCm: 12.400000
+      layerLengthCm: 16.400000
+      layerThicknessCm: 0.500000
+      freshColor: !<Vec4> {x: 1.000000, y: 0.800000, z: 0.120000, w: 1.000000}
+      setColor: !<Vec4> {x: 0.980000, y: 0.930000, z: 0.660000, w: 1.000000}
+      logColor: !<Vec4> {x: 0.980000, y: 0.860000, z: 0.360000, w: 1.000000}
+      logLengthCm: 11.500000
+      logRadius1Cm: 1.300000
+      logRadius2Cm: 1.900000
+      logRadius3Cm: 2.500000
+      panInnerLengthCm: !<float> 18.000000
+      sliceCount: !<float> 6.000000
+      sliceGapCm: 0.400000
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/6a7a67db-5675-49bb-8f31-ba0588e3cffc>
   PrefabRemaps:
     []
@@ -1246,6 +1540,37 @@
     - !<own> 879ce45b-bd5e-40ff-a3fe-d821523427e4
   Components:
     - !<own> 64f27597-c99d-4c59-8a08-05459cc2258d
+- !<ScriptComponent/7393d740-bf2f-4189-ac4b-d145cd53d935>
+  PrefabRemaps:
+    []
+  Name: TamagoCoachControlsUI
+  Enabled: true
+  ScriptAsset: !<reference> 1b4d34fe-f875-4106-9c77-cf6c1e3a794a
+  ScriptInputsDefault:
+    nextSizeCm: true
+    backSizeCm: true
+    buttonGapCm: true
+    nextLabel: true
+    backLabel: true
+    demoLabel: true
+    labelSize: true
+    labelColor: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      demoSwitchAnchor: !<reference.SceneObject> 3a703b5a-0126-4a6e-9563-cb505cc5c536
+      nextSizeCm: !<Vec2> {x: 8.000000, y: 6.000000}
+      backSizeCm: !<Vec2> {x: 6.000000, y: 4.000000}
+      buttonGapCm: 1.200000
+      nextLabel: Next
+      backLabel: Back
+      demoLabel: Demo ×10
+      labelSize: !<float> 60.000000
+      labelColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/74d13517-1dbf-42e6-b536-27afc4909c65>
   PrefabRemaps:
     []
@@ -1478,6 +1803,38 @@
     - !<own> 1fc7fa3e-6910-4741-b8a7-1b6660a39a9d
   Components:
     - !<own> 28e05826-1521-46fa-a54c-80f2957ec80c
+- !<SceneObject/894e7b55-0d73-4808-ba05-7b4535a568be>
+  PrefabRemaps:
+    []
+  Name: TimerRing
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 3.000000, y: 8.100000, z: -9.600000}
+    Rotation: {x: -33.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> 9d9b088d-1f40-4e01-a149-87fb921b5608
+  Components:
+    - !<own> a94bb8f1-eea7-41a2-8451-5fc5cb255de6
+- !<SceneObject/8a2b325c-7583-4835-9b5f-4a4e43ab9bd4>
+  PrefabRemaps:
+    []
+  Name: Egg
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 3.000000, y: 0.600000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> 1f18b5fe-d9a8-4680-8b57-fa21cf575485
+    - !<own> eedc7f48-4dc2-4a9a-beb4-e9435f0dc8e5
+    - !<own> cb2e796b-c6c0-4935-aff0-697d7bf0420d
+  Components:
+    - !<own> 69f14459-806f-4fc5-a2d1-071fc24aaa72
 - !<SceneObject/8b877074-7eee-4be1-b669-714f8d5a1da3>
   PrefabRemaps:
     []
@@ -1546,6 +1903,21 @@
     - !<own> 8cb3dd13-6ebf-41e6-9a23-94a69dd96f87
   Components:
     []
+- !<SceneObject/931d38db-78c8-4f9c-8b33-8b8c3566f8ad>
+  PrefabRemaps:
+    []
+  Name: LeafIndex
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 11e43030-a267-4ec5-96a5-c1d09c5d933f
 - !<SceneObject/9468c53c-f76f-49b7-8a49-b5ec6af1c5a3>
   PrefabRemaps:
     []
@@ -1562,6 +1934,38 @@
     - !<own> e9454e66-5d09-4a8a-bcd7-dea762326a48
   Components:
     []
+- !<ScriptComponent/9684939d-5877-4371-934f-55d4c72ec922>
+  PrefabRemaps:
+    []
+  Name: TamagoCoachCardUI
+  Enabled: true
+  ScriptAsset: !<reference> fab528d6-b04c-407b-bcfa-ac7619ab1f7d
+  ScriptInputsDefault:
+    widthCm: true
+    heightCm: true
+    titleSize: true
+    bodySize: true
+    titleColor: true
+    textColor: true
+    tipColor: true
+    plateStyle: true
+    animateSeconds: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      widthCm: !<float> 24.000000
+      heightCm: !<float> 12.000000
+      titleSize: !<float> 64.000000
+      bodySize: !<float> 54.000000
+      titleColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+      textColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+      tipColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 1.000000, w: 0.720000}
+      plateStyle: dark
+      animateSeconds: 0.200000
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/988c408a-99dc-47e6-b7c4-efbf4bf8dc3c>
   PrefabRemaps:
     []
@@ -1577,6 +1981,21 @@
     - !<own> a4de4ce7-f468-4966-8a06-e29eea60c023
   Components:
     []
+- !<SceneObject/99e95ccf-cf81-4db8-ad80-65a0427d94a1>
+  PrefabRemaps:
+    []
+  Name: TamagoCoach
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> 08a902b8-bf50-4298-92ca-c0c1d9f62ef1
+  Components:
+    - !<own> b411004e-08e2-4581-9a6a-e3cd56bc4b79
 - !<SceneObject/9c3a7929-faa9-4369-a85c-c75a6ab4eee7>
   PrefabRemaps:
     []
@@ -1608,6 +2027,21 @@
   ScriptTypes:
     "":
       {}
+- !<SceneObject/9d9b088d-1f40-4e01-a149-87fb921b5608>
+  PrefabRemaps:
+    []
+  Name: RingText
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.300000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 0fcfccff-4778-45d3-8198-f69094989770
 - !<SceneObject/9e373d68-993f-4c8f-83a0-6644f1d9fefd>
   PrefabRemaps:
     []
@@ -1747,6 +2181,45 @@
     - !<own> 0c355300-e635-47c1-a8c3-5ddef30b8824
   Components:
     []
+- !<ScriptComponent/a94bb8f1-eea7-41a2-8451-5fc5cb255de6>
+  PrefabRemaps:
+    []
+  Name: TamagoCoachRingMesh
+  Enabled: true
+  ScriptAsset: !<reference> 04f8f03d-376a-41eb-bc41-6fc54bbb0711
+  ScriptInputsDefault:
+    outerDiameterCm: true
+    bandCm: true
+    thicknessCm: true
+    segments: true
+    arcColor: true
+    trackColor: true
+    hoverColor: true
+    pausedColor: true
+    pulseScale: true
+    pulseSeconds: true
+    colliderPaddingCm: true
+    debugCollider: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      material: !<reference.Material> 70d03593-c7b4-410a-ae5c-75cb82ee32dc
+      outerDiameterCm: !<float> 6.000000
+      bandCm: 0.800000
+      thicknessCm: 0.400000
+      segments: !<float> 64.000000
+      arcColor: !<Vec4> {x: 0.350000, y: 0.850000, z: 1.000000, w: 1.000000}
+      trackColor: !<Vec4> {x: 0.300000, y: 0.330000, z: 0.380000, w: 1.000000}
+      hoverColor: !<Vec4> {x: 0.800000, y: 0.960000, z: 1.000000, w: 1.000000}
+      pausedColor: !<Vec4> {x: 1.000000, y: 0.720000, z: 0.250000, w: 1.000000}
+      pulseScale: 1.250000
+      pulseSeconds: 0.300000
+      colliderPaddingCm: !<float> 1.000000
+      debugCollider: false
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/a98a7d22-28b9-4357-97cd-1486e721ac5d>
   PrefabRemaps:
     []
@@ -1777,6 +2250,28 @@
     - !<own> f6687ab7-52ac-408d-a892-8a9559125450
   Components:
     []
+- !<ScriptComponent/b2133bbc-dd51-4231-9017-afbb73556a53>
+  PrefabRemaps:
+    []
+  Name: TamagoCoachPlacement
+  Enabled: true
+  ScriptAsset: !<reference> 13fc633c-69f7-42b6-9140-7d8f55e959c5
+  ScriptInputsDefault:
+    forwardCm: true
+    belowEyeCm: true
+    delaySeconds: true
+    placeAtStart: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      forwardCm: !<float> 70.000000
+      belowEyeCm: !<float> 45.000000
+      delaySeconds: 0.300000
+      placeAtStart: true
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/b22d97e6-4c06-4135-af29-d26adb2b9d86>
   PrefabRemaps:
     []
@@ -1792,6 +2287,41 @@
     - !<own> 3de2c7ea-1525-465a-9056-68565a4014a7
   Components:
     []
+- !<ScriptComponent/b411004e-08e2-4581-9a6a-e3cd56bc4b79>
+  PrefabRemaps:
+    []
+  Name: TamagoCoachMain
+  Enabled: true
+  ScriptAsset: !<reference> 2ee9accf-f214-4251-aaec-4ef660da4499
+  ScriptInputsDefault:
+    demoSpeedFactor: true
+    cardCollapseSeconds: true
+    demoAtStart: true
+    startAtStep: true
+    pulseCount: true
+    spatialChime: true
+    debugBounds: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      cardUI: !<MappingBased.AssignableType_1> 9684939d-5877-4371-934f-55d4c72ec922
+      ringUI: !<MappingBased.AssignableType_2> 0fcfccff-4778-45d3-8198-f69094989770
+      controlsUI: !<MappingBased.AssignableType_3> 7393d740-bf2f-4189-ac4b-d145cd53d935
+      ringMesh: !<MappingBased.AssignableType_4> a94bb8f1-eea7-41a2-8451-5fc5cb255de6
+      egg: !<MappingBased.AssignableType_5> 69f14459-806f-4fc5-a2d1-071fc24aaa72
+      rollArrow: !<reference.SceneObject> 16f81cb1-5eac-446b-95f7-a9e0529be7c4
+      chimeAudio: !<reference.AudioComponent> 59a9af2f-f870-44e8-a67b-d2aedf1b3d94
+      demoSpeedFactor: !<float> 10.000000
+      cardCollapseSeconds: !<float> 6.000000
+      demoAtStart: false
+      startAtStep: !<float> 0.000000
+      pulseCount: !<float> 3.000000
+      spatialChime: true
+      debugBounds: false
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/b463be13-dddb-4b36-a3dd-c344bd3d8ef5>
   PrefabRemaps:
     []
@@ -1865,6 +2395,21 @@
     HasSegmentScaleCompensation: false
   Children:
     - !<own> 44097eaf-01da-45fb-8973-3bd8172618de
+  Components:
+    []
+- !<SceneObject/b8dda9de-9b1d-4615-8fd1-8aa021089a97>
+  PrefabRemaps:
+    []
+  Name: PanHandle
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 13.600000, y: 2.250000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
   Components:
     []
 - !<SceneObject/b93dfa60-41bd-4999-ac0f-4b2f1df2bdaf>
@@ -1957,6 +2502,52 @@
     []
   Components:
     []
+- !<SceneObject/c0cad59f-478d-4898-96f3-d251ff78e89b>
+  PrefabRemaps:
+    []
+  Name: ChimeAudio
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 1.500000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 59a9af2f-f870-44e8-a67b-d2aedf1b3d94
+- !<SceneObject/c3338bd1-345e-4453-a6ec-de3a4982c49e>
+  PrefabRemaps:
+    []
+  Name: StepCard
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 3.000000, y: 12.800000, z: -15.000000}
+    Rotation: {x: -30.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 9684939d-5877-4371-934f-55d4c72ec922
+    - !<own> 07ed813a-9aa3-4a4c-98a0-5813a7537b8f
+- !<SceneObject/c670a835-3084-4228-9b53-8a85c1d0fac5>
+  PrefabRemaps:
+    []
+  Name: Counter
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> df0a1cad-3ab9-4e92-9813-2d93865362f1
 - !<ScriptComponent/c8e031d3-a8a1-468a-a419-427f8556de4c>
   PrefabRemaps:
     []
@@ -1998,6 +2589,21 @@
     HasSegmentScaleCompensation: false
   Children:
     - !<own> 0a0e1d78-8246-4f5b-ab1a-fdc51837956d
+  Components:
+    []
+- !<SceneObject/cb2e796b-c6c0-4935-aff0-697d7bf0420d>
+  PrefabRemaps:
+    []
+  Name: EggSlices
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
   Components:
     []
 - !<Skin/ccf4d3bc-d3c2-4580-b9c5-62f164ef7eef>
@@ -2085,6 +2691,21 @@
     - !<own> 650dc0b4-8d22-4aab-87b4-d8e56fb59a67
   Components:
     - !<own> 0847d2bb-a13f-4c4a-a404-169f67308f6f
+- !<SceneObject/cf8cf56d-cd58-47b3-a74c-645a33b7cb1b>
+  PrefabRemaps:
+    []
+  Name: Controls
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: -12.500000, y: 0.200000, z: 12.500000}
+    Rotation: {x: -50.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 7393d740-bf2f-4189-ac4b-d145cd53d935
 - !<SceneObject/d08269e3-acd4-4156-b5b9-477ca259611d>
   PrefabRemaps:
     []
@@ -2100,6 +2721,21 @@
     - !<own> bb9036be-541f-49e7-9554-c297d354da21
   Components:
     []
+- !<SceneObject/d33295b8-bd49-4d0b-831f-5f1ac7b61559>
+  PrefabRemaps:
+    []
+  Name: GrabBar
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.600000, z: 16.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 5e41a8e8-d701-43d8-b949-9a37c912c872
 - !<ScriptComponent/d3e2fbc5-8795-4913-9af6-c8626f8e6d9c>
   PrefabRemaps:
     []
@@ -2150,6 +2786,37 @@
     - !<own> bbcbfc17-8d65-4333-bce1-6f7239f690b8
   Components:
     []
+- !<ScriptComponent/d733cddf-39b6-4172-a4cc-9e60f10cb391>
+  PrefabRemaps:
+    []
+  Name: RollArrowMesh
+  Enabled: true
+  ScriptAsset: !<reference> d7b621e4-d3bb-4eb4-a4c3-0348a9b81e33
+  ScriptInputsDefault:
+    arrowLength: true
+    headLength: true
+    headWidth: true
+    shaftWidth: true
+    thickness: true
+    animate: true
+    sweepDistance: true
+    sweepSeconds: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      material: !<reference.Material> 70d03593-c7b4-410a-ae5c-75cb82ee32dc
+      arrowLength: !<float> 12.000000
+      headLength: 4.500000
+      headWidth: !<float> 7.000000
+      shaftWidth: !<float> 3.000000
+      thickness: 0.300000
+      animate: true
+      sweepDistance: !<float> 4.000000
+      sweepSeconds: 1.200000
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/d9071294-12e8-425f-98f1-bf308a02639e>
   PrefabRemaps:
     []
@@ -2240,6 +2907,29 @@
     - !<own> d4a9c5e3-fe96-4824-9b20-59f5ad39eabd
   Components:
     []
+- !<ScriptComponent/df0a1cad-3ab9-4e92-9813-2d93865362f1>
+  PrefabRemaps:
+    []
+  Name: TamagoCoachCounterMesh
+  Enabled: true
+  ScriptAsset: !<reference> dac9e7c2-c026-400a-9305-b8ab5b24fef9
+  ScriptInputsDefault:
+    widthCm: true
+    depthCm: true
+    thicknessCm: true
+    color: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      material: !<reference.Material> 70d03593-c7b4-410a-ae5c-75cb82ee32dc
+      widthCm: !<float> 50.000000
+      depthCm: !<float> 35.000000
+      thicknessCm: !<float> 2.000000
+      color: !<Vec4> {x: 0.800000, y: 0.770000, z: 0.720000, w: 1.000000}
+  ScriptTypes:
+    "":
+      {}
 - !<RenderMeshVisual/e1031f7e-3474-489f-a529-282f7192f812>
   PrefabRemaps:
     []
@@ -2353,6 +3043,21 @@
     Fingers_length: 0.000000
     Thumb_inflate: 0.000000
     Thumb_length: 0.000000
+- !<SceneObject/eedc7f48-4dc2-4a9a-beb4-e9435f0dc8e5>
+  PrefabRemaps:
+    []
+  Name: EggLog
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    []
 - !<SceneObject/f0394c5d-4c44-4c65-a77c-e1c7e05ca905>
   PrefabRemaps:
     []
@@ -2384,6 +3089,22 @@
   Components:
     - !<own> d3e2fbc5-8795-4913-9af6-c8626f8e6d9c
     - !<own> 275aeb4d-77ac-4b1b-811e-907652542110
+- !<SceneObject/f4c3c88d-e2f0-4930-b398-e67ea05192f5>
+  PrefabRemaps:
+    []
+  Name: Pan
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 3.000000, y: 0.600000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> b8dda9de-9b1d-4615-8fd1-8aa021089a97
+    - !<own> c0cad59f-478d-4898-96f3-d251ff78e89b
+  Components:
+    - !<own> 053a550c-6b86-41c3-8ed7-c55739e6c8eb
 - !<SceneObject/f5d74682-203a-4970-81ea-9fa7b88c96bb>
   PrefabRemaps:
     - 012a3973-9507-4230-a6ff-2b8dfd2154fe: e3ec5982-f5aa-45f3-4551-4d3a92a1f432

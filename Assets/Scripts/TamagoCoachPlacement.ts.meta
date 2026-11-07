@@ -1,0 +1,60 @@
+- !<AssetImportMetadata/81cb5d55-60e8-4b7e-9f0a-1d5fa00e0c89>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 13fc633c-69f7-42b6-9140-7d8f55e959c5
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 13fc633c-69f7-42b6-9140-7d8f55e959c5
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> c772cef2-c1d6-4bd4-a827-240c27e427ad
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/c772cef2-c1d6-4bd4-a827-240c27e427ad>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  VersionPrerelease: ""
+  UpdateOrder: 0
+  ComponentUid: 2cd88451-d1e6-4867-b121-7a3a81e9d9a4
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    belowEyeCm: false
+    delaySeconds: false
+    forwardCm: false
+    placeAtStart: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - forwardCm: !<float> 70.000000
+      belowEyeCm: !<float> 45.000000
+      delaySeconds: 0.300000
+      placeAtStart: true
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">TamagoCoachPlacement – one-shot placement at start</span>"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">Settings</span>"}'
+    - '// @ui {"widget":"group_start", "label":"Settings"}'
+    - '// @input float forwardCm = 70 {"hint":"Distance in front of the head, cm", "widget":"slider", "min":30, "max":150, "step":1}'
+    - '// @input float belowEyeCm = 45 {"hint":"Drop of the counter top below eye level, cm", "widget":"slider", "min":0, "max":100, "step":1}'
+    - '// @input float delaySeconds = 0.3 {"hint":"Seconds to wait after start before placing (camera pose settles)", "widget":"slider", "min":0, "max":2, "step":0.05}'
+    - '// @input bool placeAtStart = true {"hint":"Off = keep the authored transform instead of placing relative to the head"}'
+    - '// @ui {"widget":"group_end"}'
