@@ -36,6 +36,7 @@
     material: false
     outerDiameterCm: false
     pausedColor: false
+    pulseColor: false
     pulseScale: false
     pulseSeconds: false
     segments: false
@@ -59,6 +60,7 @@
       trackColor: !<Vec4> {x: 0.300000, y: 0.330000, z: 0.380000, w: 1.000000}
       hoverColor: !<Vec4> {x: 0.800000, y: 0.960000, z: 1.000000, w: 1.000000}
       pausedColor: !<Vec4> {x: 1.000000, y: 0.720000, z: 0.250000, w: 1.000000}
+      pulseColor: !<Vec4> {x: 1.000000, y: 0.800000, z: 0.550000, w: 1.000000}
       pulseScale: 1.250000
       pulseSeconds: 0.300000
       colliderPaddingCm: !<float> 1.000000
@@ -84,6 +86,7 @@
     - '// @input vec4 trackColor = "{0.32,0.32,0.32,1}" {"hint":"Colour of the elapsed full-circle track (30 % white reads as faint white on the additive display)", "widget":"color"}'
     - '// @input vec4 hoverColor = "{1.0,0.9,0.5,1}" {"hint":"Arc colour while a hand/cursor aims at the ring", "widget":"color"}'
     - '// @input vec4 pausedColor = "{1.0,0.62,0.2,1}" {"hint":"Arc colour while the countdown is paused", "widget":"color"}'
+    - '// @input vec4 pulseColor = "{1.0,0.80,0.55,1}" {"hint":"Track and arc colour at the peak of the Done colour pulse (warm)", "widget":"color"}'
     - '// @input float pulseScale = 1.25 {"hint":"Peak scale of one pulse at zero", "widget":"slider", "min":1, "max":2, "step":0.05}'
     - '// @input float pulseSeconds = 0.3 {"hint":"Duration of one pulse, seconds", "widget":"slider", "min":0.1, "max":1, "step":0.05}'
     - '// @input float colliderPaddingCm = 1 {"hint":"Extra collider size around the ring so it is easy to pinch, cm", "widget":"slider", "min":0, "max":6, "step":0.5}'

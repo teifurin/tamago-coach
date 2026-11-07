@@ -33,7 +33,7 @@ No SPECS glasses are needed.
 - Planned with the Devpost Learn skill pack. `plan-lens` interviewed the author and wrote [`devpost/design-brief.md`](devpost/design-brief.md).
 - Built by Claude Code through Snap's CLAD plugin (`ls-clad`) and the Lens Studio MCP. The agent authored the scene, the TypeScript components, the primitive meshes (counter, pan, egg, arrow, ring: all generated in code, no 3D models), the chime, and the UI Kit panels, then checked screenshots from the user's viewpoint.
 - Tested with LEAF. The tests found one real bug (the Demo switch callback) and one reach problem (Next and Back sat 83 cm from the head), both fixed with design notes rather than hand-written code.
-- Build report: [`devpost/build-report.md`](devpost/build-report.md).
+- Build report: [`devpost/build-report.en.md`](devpost/build-report.en.md) (English summary) and [`devpost/build-report.md`](devpost/build-report.md) (full, in Chinese).
 
 ## Structure
 

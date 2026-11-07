@@ -1,6 +1,6 @@
 import Event, { PublicApi } from "SpectaclesInteractionKit.lspkg/Utils/Event";
 import { Interactable } from "SpectaclesInteractionKit.lspkg/Components/Interaction/Interactable/Interactable";
-import { MeshWriter, RGBA, Vec3 } from "./Meshes/MeshKit";
+import { MeshWriter, RGBA, Vec3, lerpColor } from "./Meshes/MeshKit";
 
 /**
  * TamagoCoachRingMesh - the timer ring: a dim full annulus (track) plus a bright arc that
@@ -67,6 +67,11 @@ export class TamagoCoachRingMesh extends BaseScriptComponent {
   @widget(new ColorWidget())
   pausedColor: vec4;
 
+  @input("vec4", "{1.0,0.80,0.55,1}")
+  @hint("Track and arc colour at the peak of the Done colour pulse (warm)")
+  @widget(new ColorWidget())
+  pulseColor: vec4;
+
   @input
   @hint("Peak scale of one pulse at zero")
   @widget(new SliderWidget(1, 2, 0.05))
@@ -96,6 +101,9 @@ export class TamagoCoachRingMesh extends BaseScriptComponent {
   private pulsesLeft = 0;
   private pulseT = 0;
   private pulsing = false;
+  private colorPulseSeconds = 0;
+  private colorPulseT = -1;
+  private pulseK = 0;
 
   private onPinchEvent = new Event<void>();
   /** Fires when the user pinches/clicks the ring. */
@@ -110,9 +118,7 @@ export class TamagoCoachRingMesh extends BaseScriptComponent {
     const track = global.scene.createSceneObject("RingTrack");
     track.setParent(this.visualRoot);
     this.trackRmv = track.createComponent("Component.RenderMeshVisual") as RenderMeshVisual;
-    const tw = new MeshWriter();
-    this.annulusArc(tw, 0, Math.PI * 2, this.segments, this.rgba(this.trackColor));
-    tw.commit(this.trackRmv, this.material);
+    this.rebuildTrack(this.rgba(this.trackColor));
 
     const arc = global.scene.createSceneObject("RingArc");
     arc.setParent(this.visualRoot);
@@ -135,7 +141,10 @@ export class TamagoCoachRingMesh extends BaseScriptComponent {
       interactable.onHoverExit.add(() => this.setHovered(false));
     });
 
-    this.createEvent("UpdateEvent").bind(() => this.updatePulse());
+    this.createEvent("UpdateEvent").bind(() => {
+      this.updatePulse();
+      this.updateColorPulse();
+    });
   }
 
   /** Remaining fraction 0..1; the bright arc covers that share of the circle from 12 o'clock. */
@@ -163,6 +172,15 @@ export class TamagoCoachRingMesh extends BaseScriptComponent {
     this.pulsing = true;
   }
 
+  /**
+   * One warm colour flash of the track and the arc: current colours -> pulseColor -> back (sine)
+   * over `seconds`; the exact previous colours are restored at the end (hover/paused still win).
+   */
+  colorPulse(seconds: number): void {
+    this.colorPulseSeconds = Math.max(0.05, seconds);
+    this.colorPulseT = 0;
+  }
+
   private setHovered(hovered: boolean): void {
     if (this.hovered === hovered) return;
     this.hovered = hovered;
@@ -170,9 +188,8 @@ export class TamagoCoachRingMesh extends BaseScriptComponent {
   }
 
   private currentArcColor(): RGBA {
-    if (this.hovered) return this.rgba(this.hoverColor);
-    if (this.paused) return this.rgba(this.pausedColor);
-    return this.rgba(this.arcColor);
+    const base = this.hovered ? this.rgba(this.hoverColor) : this.paused ? this.rgba(this.pausedColor) : this.rgba(this.arcColor);
+    return this.pulseK > 0 ? lerpColor(base, this.rgba(this.pulseColor), this.pulseK) : base;
   }
 
   private rebuildArc(segs: number): void {
@@ -235,6 +252,25 @@ export class TamagoCoachRingMesh extends BaseScriptComponent {
     }
     const s = 1 + (this.pulseScale - 1) * Math.sin(Math.PI * phase);
     this.visualRoot.getTransform().setLocalScale(new vec3(s, s, 1));
+  }
+
+  private rebuildTrack(color: RGBA): void {
+    if (!this.trackRmv) return;
+    const tw = new MeshWriter();
+    this.annulusArc(tw, 0, Math.PI * 2, this.segments, color);
+    tw.commit(this.trackRmv, this.material);
+  }
+
+  private updateColorPulse(): void {
+    if (this.colorPulseT < 0) return;
+    this.colorPulseT += getDeltaTime();
+    const p = Math.min(1, this.colorPulseT / this.colorPulseSeconds);
+    this.pulseK = p >= 1 ? 0 : Math.sin(Math.PI * p);
+    if (p >= 1) this.colorPulseT = -1;
+    // Rebuild both with the blended colours; the final frame (pulseK 0) restores the exact colours.
+    const track = this.rgba(this.trackColor);
+    this.rebuildTrack(this.pulseK > 0 ? lerpColor(track, this.rgba(this.pulseColor), this.pulseK) : track);
+    this.rebuildArc(this.arcSegments);
   }
 
   private rgba(c: vec4): RGBA {

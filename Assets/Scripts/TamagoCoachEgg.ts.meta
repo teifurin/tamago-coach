@@ -54,6 +54,7 @@
     setRoughness: false
     sliceCount: false
     sliceGapCm: false
+    sliceRevealSeconds: false
     slicesObject: false
   ScriptTypesHidden:
     {}
@@ -90,6 +91,7 @@
       panInnerLengthCm: !<float> 18.000000
       sliceCount: !<float> 6.000000
       sliceGapCm: 0.400000
+      sliceRevealSeconds: 0.150000
       layerRenderOrder: !<float> 1.000000
   ScriptTypes:
     -
@@ -129,5 +131,6 @@
     - '// @input float panInnerLengthCm = 18 {"hint":"Pan interior length along Z, cm (keeps the log inside the far wall)", "widget":"slider", "min":10, "max":25, "step":0.5}'
     - '// @input float sliceCount = 6 {"hint":"Number of slices shown at Done", "widget":"slider", "min":2, "max":10, "step":1}'
     - '// @input float sliceGapCm = 0.4 {"hint":"Gap between slices, cm", "widget":"slider", "min":0, "max":2, "step":0.1}'
+    - '// @input float sliceRevealSeconds = 0.15 {"hint":"Seconds between slices appearing at Done (0 = all six at once)", "widget":"slider", "min":0, "max":1, "step":0.05}'
     - '// @input float layerRenderOrder = 1 {"hint":"Render order of the translucent layer (drawn after the opaque pan, whatever the hierarchy order)", "widget":"slider", "min":0, "max":10, "step":1}'
     - '// @ui {"widget":"group_end"}'

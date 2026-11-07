@@ -1,0 +1,79 @@
+- !<AssetImportMetadata/292894cd-6fba-4777-947c-b8fb37491d51>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 072bf31b-2c74-4f95-92b4-cdb0d1abae42
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 072bf31b-2c74-4f95-92b4-cdb0d1abae42
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 2f3db513-894a-4450-a274-15c89ee43785
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/2f3db513-894a-4450-a274-15c89ee43785>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  VersionPrerelease: ""
+  UpdateOrder: 0
+  ComponentUid: c8972d6e-fac0-48a9-97c4-499ed6a6fb4c
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    cycleSeconds: false
+    material: false
+    maxAlpha: false
+    puffAspect: false
+    puffDiameterCm: false
+    puffsPerWisp: false
+    renderOrder: false
+    riseCm: false
+    swayCm: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - material: !<reference.Material> 00000000-0000-0000-0000-000000000000
+      puffDiameterCm: 2.500000
+      puffAspect: 1.600000
+      puffsPerWisp: !<float> 8.000000
+      riseCm: !<float> 9.000000
+      cycleSeconds: 1.600000
+      swayCm: 0.800000
+      maxAlpha: 0.200000
+      renderOrder: !<float> 6.000000
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">TamagoCoachSteam – steam wisps over the pan (Heat)</span>"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">References</span>"}'
+    - '// @ui {"widget":"group_start", "label":"References"}'
+    - '// @input Asset.Material material {"hint":"ShadowSoft: unlit vertex-colour material, blendMode Normal, depthWrite off (white vertex colour = steam)"}'
+    - '// @ui {"widget":"group_end"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">Settings</span>"}'
+    - '// @ui {"widget":"group_start", "label":"Settings"}'
+    - '// @input float puffDiameterCm = 2.2 {"hint":"Width of one puff at scale 1, cm (puffs grow from 0.7x to 1.3x over their life)", "widget":"slider", "min":1, "max":5, "step":0.1}'
+    - '// @input float puffAspect = 1.6 {"hint":"Height / width of each puff (1 = round disc, 1.6 = elongated wisp)", "widget":"slider", "min":1, "max":3, "step":0.1}'
+    - '// @input float puffsPerWisp = 8 {"hint":"Puffs per wisp, evenly spread over the cycle (more = a more continuous streak)", "widget":"slider", "min":3, "max":12, "step":1}'
+    - '// @input float riseCm = 9 {"hint":"How far each puff rises over its life, cm", "widget":"slider", "min":3, "max":20, "step":0.5}'
+    - '// @input float cycleSeconds = 1.8 {"hint":"Life of one puff (rise time), seconds", "widget":"slider", "min":0.5, "max":4, "step":0.1}'
+    - '// @input float swayCm = 0.8 {"hint":"Sideways sway amplitude of the streak, cm", "widget":"slider", "min":0, "max":3, "step":0.1}'
+    - '// @input float maxAlpha = 0.14 {"hint":"Peak opacity of one puff (keep <= 0.15 so two stacked puffs stay under 30 %)", "widget":"slider", "min":0, "max":0.3, "step":0.01}'
+    - "// @input float renderOrder = 6 {\"hint\":\"Render order of the translucent puffs (after the egg layer's 1 so they draw last)\", \"widget\":\"slider\", \"min\":0, \"max\":10, \"step\":1}"
+    - '// @ui {"widget":"group_end"}'

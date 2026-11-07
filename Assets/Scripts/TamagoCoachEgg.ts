@@ -161,6 +161,11 @@ export class TamagoCoachEgg extends BaseScriptComponent {
   sliceGapCm: number = 0.4;
 
   @input
+  @hint("Seconds between slices appearing at Done (0 = all six at once)")
+  @widget(new SliderWidget(0, 1, 0.05))
+  sliceRevealSeconds: number = 0.15;
+
+  @input
   @hint("Render order of the translucent layer (drawn after the opaque pan, whatever the hierarchy order)")
   @widget(new SliderWidget(0, 10, 1))
   layerRenderOrder: number = 1;
@@ -172,6 +177,9 @@ export class TamagoCoachEgg extends BaseScriptComponent {
   private layerMat: Material | null = null;
   private readinessStep = -1;
   private rolls = 0;
+  private revealing = false;
+  private revealShown = 0;
+  private revealT = 0;
 
   onAwake(): void {
     if (!this.layerObject || !this.logObject || !this.slicesObject) {
@@ -188,7 +196,8 @@ export class TamagoCoachEgg extends BaseScriptComponent {
     this.layerMat = layerSource ? layerSource.clone() : null;
     print("[TamagoCoachEgg] materials layer=" + (this.layerMaterial ? "ok" : "fallback") + " log=" + (this.logMaterial ? "ok" : "fallback") + " base=" + (this.material ? "ok" : "MISSING"));
     this.setReadiness(0);
-    this.buildSlices();
+    this.buildSlices(this.sliceTotal());
+    this.createEvent("UpdateEvent").bind(() => this.updateReveal());
     this.layerObject.enabled = false;
     this.logObject.enabled = false;
     this.slicesObject.enabled = false;
@@ -230,11 +239,41 @@ export class TamagoCoachEgg extends BaseScriptComponent {
     return 2 * this.radiusForRolls(this.rolls);
   }
 
-  /** Replace the log with six slices (Done) or hide them again. */
+  /**
+   * Replace the log with the slices (Done) or hide them again. Showing starts a reveal: the slices
+   * appear one by one, `sliceRevealSeconds` apart (positions never shift); hiding cancels it.
+   */
   showSlices(visible: boolean): void {
+    if (visible) {
+      const total = this.sliceTotal();
+      this.revealT = 0;
+      this.revealShown = this.sliceRevealSeconds > 0 ? 1 : total;
+      this.revealing = this.revealShown < total;
+      this.buildSlices(this.revealShown);
+    } else {
+      this.revealing = false;
+    }
     if (this.slicesObject) this.slicesObject.enabled = visible;
     if (visible && this.logObject) this.logObject.enabled = false;
     if (!visible && this.logObject) this.logObject.enabled = this.rolls > 0;
+  }
+
+  private sliceTotal(): number {
+    return Math.max(1, Math.round(this.sliceCount));
+  }
+
+  /** Advances the Done reveal: one more slice every sliceRevealSeconds until all are shown. */
+  private updateReveal(): void {
+    if (!this.revealing) return;
+    const total = this.sliceTotal();
+    const interval = Math.max(0.01, this.sliceRevealSeconds);
+    this.revealT += getDeltaTime();
+    while (this.revealing && this.revealT >= interval) {
+      this.revealT -= interval;
+      this.revealShown = Math.min(total, this.revealShown + 1);
+      this.buildSlices(this.revealShown);
+      if (this.revealShown >= total) this.revealing = false;
+    }
   }
 
   private radiusForRolls(rolls: number): number {
@@ -303,13 +342,15 @@ export class TamagoCoachEgg extends BaseScriptComponent {
     w.commit(this.logRmv, this.logMaterial || this.material);
   }
 
-  private buildSlices(): void {
+  /** Builds the first `count` slices; positions come from the full sliceCount, so they never shift. */
+  private buildSlices(count: number): void {
     if (!this.slicesRmv) return;
     const r = this.radiusForRolls(3);
-    const n = Math.max(1, Math.round(this.sliceCount));
+    const n = this.sliceTotal();
+    const shown = Math.max(1, Math.min(n, Math.round(count)));
     const sliceLen = (this.logLengthCm - (n - 1) * this.sliceGapCm) / n;
     const w = new MeshWriter();
-    for (let i = 0; i < n; i++) {
+    for (let i = 0; i < shown; i++) {
       const x0 = -this.logLengthCm / 2 + i * (sliceLen + this.sliceGapCm);
       this.cylinderX(w, x0, x0 + sliceLen, r, this.logAxisZ(r), r, 20, 0);
     }

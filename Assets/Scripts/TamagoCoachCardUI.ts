@@ -85,6 +85,11 @@ export class TamagoCoachCardUI extends BaseScriptComponent {
   @hint("Accent line thickness, cm")
   @widget(new SliderWidget(0.1, 1, 0.05))
   accentCm: number = 0.3;
+
+  @input("vec4", "{1.0,0.92,0.70,1}")
+  @hint("Accent line colour at the peak of the Done pulse (warm white-orange)")
+  @widget(new ColorWidget())
+  pulseColor: vec4;
   @ui.group_end
 
   @ui.separator
@@ -155,6 +160,9 @@ export class TamagoCoachCardUI extends BaseScriptComponent {
   private animTo = 1;
   private animT = 0;
   private disableWhenDone = false;
+  private accentLine: RoundedRectangle | null = null;
+  private pulseSeconds = 0;
+  private pulseT = -1;
 
   onAwake(): void {
     this.sceneObject.createComponent("Component.Canvas");
@@ -184,6 +192,7 @@ export class TamagoCoachCardUI extends BaseScriptComponent {
     line.blendMode = RoundedRectBlendMode.Disabled;
     line.opacity = 1;
     line.initialize();
+    this.accentLine = line;
 
     // Text column, lifted in front of the plate.
     const content = global.scene.createSceneObject("Content");
@@ -244,7 +253,10 @@ export class TamagoCoachCardUI extends BaseScriptComponent {
     this.tipText = tip.text;
     flex.addItems([headerItem, body.item, tip.item]);
 
-    this.createEvent("UpdateEvent").bind(() => this.animate());
+    this.createEvent("UpdateEvent").bind(() => {
+      this.animate();
+      this.updatePulse();
+    });
   }
 
   /** Replace the title, instruction and tip (a new step). */
@@ -289,6 +301,26 @@ export class TamagoCoachCardUI extends BaseScriptComponent {
 
   isExpanded(): boolean {
     return this.expanded;
+  }
+
+  /** One warm flash of the accent line: accent -> pulseColor -> accent (sine) over `seconds`. */
+  pulseAccent(seconds: number): void {
+    this.pulseSeconds = Math.max(0.05, seconds);
+    this.pulseT = 0;
+  }
+
+  private updatePulse(): void {
+    if (this.pulseT < 0 || !this.accentLine) return;
+    this.pulseT += getDeltaTime();
+    const p = Math.min(1, this.pulseT / this.pulseSeconds);
+    const k = Math.sin(Math.PI * p);
+    const a = this.accentColor;
+    const b = this.pulseColor;
+    this.accentLine.backgroundColor = new vec4(a.x + (b.x - a.x) * k, a.y + (b.y - a.y) * k, a.z + (b.z - a.z) * k, a.w + (b.w - a.w) * k);
+    if (p >= 1) {
+      this.pulseT = -1;
+      this.accentLine.backgroundColor = this.accentColor; // restore the exact accent colour
+    }
   }
 
   private addText(

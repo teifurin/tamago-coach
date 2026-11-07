@@ -3,6 +3,7 @@ import { TamagoCoachRingUI } from "./TamagoCoachRingUI";
 import { TamagoCoachControlsUI } from "./TamagoCoachControlsUI";
 import { TamagoCoachRingMesh } from "./TamagoCoachRingMesh";
 import { TamagoCoachEgg } from "./TamagoCoachEgg";
+import { TamagoCoachSteam } from "./TamagoCoachSteam";
 import WorldCameraFinderProvider from "SpectaclesInteractionKit.lspkg/Providers/CameraProvider/WorldCameraFinderProvider";
 
 /**
@@ -122,6 +123,11 @@ export class TamagoCoachMain extends BaseScriptComponent {
   @allowUndefined
   @hint("AudioComponent on ChimeAudio (at the pan); drop a WAV on it if none is set")
   chimeAudio: AudioComponent;
+
+  @input
+  @allowUndefined
+  @hint("Steam wisps over the pan (Steam / TamagoCoachSteam); shown only while the Heat countdown runs")
+  steam: TamagoCoachSteam;
   @ui.group_end
 
   @ui.separator
@@ -150,6 +156,11 @@ export class TamagoCoachMain extends BaseScriptComponent {
   @hint("Number of ring pulses at zero")
   @widget(new SliderWidget(1, 6, 1))
   pulseCount: number = 3;
+
+  @input
+  @hint("Length of the warm Done pulse (card accent line and timer ring flash once), seconds")
+  @widget(new SliderWidget(0.2, 5, 0.1))
+  donePulseSeconds: number = 0.6;
 
   @input
   @hint("Play the chime as spatial audio at the pan (creates a runtime audio listener that follows the head)")
@@ -235,6 +246,7 @@ export class TamagoCoachMain extends BaseScriptComponent {
     this.paused = !this.paused;
     if (this.ringUI) this.ringUI.setPaused(this.paused);
     if (this.ringMesh) this.ringMesh.setPaused(this.paused);
+    if (this.steam) this.steam.setActive(!this.paused && this.stepIndex === 1 && this.running); // view only
   }
 
   // ───────────────────────── lifecycle ─────────────────────────
@@ -330,6 +342,8 @@ export class TamagoCoachMain extends BaseScriptComponent {
       if (this.ringMesh) this.ringMesh.setVisible(false);
       if (this.ringUI) this.ringUI.setTime("");
     }
+    // View only: steam rises from the pan while the Heat countdown (step 2) is running.
+    if (this.steam) this.steam.setActive(step.title === "Heat" && this.running);
     print('[TamagoCoach] step=' + index + ' title="' + step.title + '"');
   }
 
@@ -376,6 +390,7 @@ export class TamagoCoachMain extends BaseScriptComponent {
       this.ringMesh.pulse(this.pulseCount);
     }
     if (this.chimeAudio && this.chimeAudio.audioTrack) this.chimeAudio.play(1);
+    if (this.steam) this.steam.setActive(false); // view only: the pan is ready, no more steam
     if (this.cardUI) {
       this.cardUI.setInstruction(step.zeroInstruction);
       this.cardUI.setTip(step.zeroTip);
@@ -389,7 +404,10 @@ export class TamagoCoachMain extends BaseScriptComponent {
     }
     if (this.stepIndex === STEPS.length - 1) {
       this.done = true;
-      if (this.egg) this.egg.showSlices(true);
+      if (this.egg) this.egg.showSlices(true); // view: the slices reveal one by one
+      // View only: one warm flash of the card accent line and the timer ring at Done.
+      if (this.cardUI) this.cardUI.pulseAccent(this.donePulseSeconds);
+      if (this.ringMesh) this.ringMesh.colorPulse(this.donePulseSeconds);
     }
     print("[TamagoCoach] zero step=" + this.stepIndex + " rollCue=" + this.rollCue);
   }

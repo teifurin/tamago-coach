@@ -35,6 +35,7 @@
     debugBounds: false
     demoAtStart: false
     demoSpeedFactor: false
+    donePulseSeconds: false
     egg: false
     pulseCount: false
     ringMesh: false
@@ -42,6 +43,7 @@
     rollArrow: false
     spatialChime: false
     startAtStep: false
+    steam: false
   ScriptTypesHidden:
     {}
   ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
@@ -58,11 +60,13 @@
       egg: !<MappingBased.AssignableType_5> 00000000-0000-0000-0000-000000000000
       rollArrow: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
       chimeAudio: !<reference.AudioComponent> 00000000-0000-0000-0000-000000000000
+      steam: !<MappingBased.AssignableType_6> 00000000-0000-0000-0000-000000000000
       demoSpeedFactor: !<float> 10.000000
       cardCollapseSeconds: !<float> 6.000000
       demoAtStart: false
       startAtStep: !<float> 0.000000
       pulseCount: !<float> 3.000000
+      donePulseSeconds: 0.600000
       spatialChime: true
       debugBounds: false
   ScriptTypes:
@@ -80,6 +84,7 @@
     - '// @input AssignableType_5 egg {"hint":"Egg visuals (Egg / TamagoCoachEgg)"}'
     - '// @input SceneObject rollArrow {"hint":"The roll arrow SceneObject (enabled only during a roll cue)"}'
     - '// @input Component.AudioComponent chimeAudio {"hint":"AudioComponent on ChimeAudio (at the pan); drop a WAV on it if none is set"}'
+    - '// @input AssignableType_6 steam {"hint":"Steam wisps over the pan (Steam / TamagoCoachSteam); shown only while the Heat countdown runs"}'
     - '// @ui {"widget":"group_end"}'
     - '// @ui {"widget":"separator"}'
     - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">Settings</span>"}'
@@ -89,6 +94,7 @@
     - '// @input bool demoAtStart {"hint":"Start with Demo x10 on"}'
     - '// @input float startAtStep {"hint":"0-based step to open at start (0 = Prep); a later step starts with the earlier layers already rolled - useful for testing", "widget":"slider", "min":0, "max":5, "step":1}'
     - '// @input float pulseCount = 3 {"hint":"Number of ring pulses at zero", "widget":"slider", "min":1, "max":6, "step":1}'
+    - '// @input float donePulseSeconds = 0.6 {"hint":"Length of the warm Done pulse (card accent line and timer ring flash once), seconds", "widget":"slider", "min":0.2, "max":5, "step":0.1}'
     - '// @input bool spatialChime = true {"hint":"Play the chime as spatial audio at the pan (creates a runtime audio listener that follows the head)"}'
     - '// @input bool debugBounds {"hint":"Print the world bounds of every mesh under this object 1 s after start (layout check)"}'
     - '// @ui {"widget":"group_end"}'

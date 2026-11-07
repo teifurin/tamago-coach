@@ -100,3 +100,34 @@
 ### 仓库状态
 
 没有提交。修改：`Assets/Scene.scene`、上面列出的 11 个脚本及其 .meta；新增未跟踪：`Assets/Materials/`、`Assets/Render/EchoparkEnv/`、`Assets/Scripts/TamagoCoachContactShadows.ts(.meta)`、`devpost/screenshots/`。Lens Studio 在打磨过程中重启了三次（内存到 5–7 GB 就重启，端口和 token 不变）。
+
+## 七、视觉打磨第二轮（2026-11-07 18:00 补记）
+
+四项小打磨，仍只用代码几何体和 UI Kit，不动交互逻辑、文案、计时和 LEAF 依赖的对象名与位置；新加的物体都没有碰撞体和 Interactable，挂在 StoveSet 下随整套移动。前三项由 CLAD 建造代理（followup 模式，一次派出加一次补改）完成，图标由本会话用 Pillow 画。
+
+### 改了什么
+
+1. **蒸汽（Heat 计时中）**：新脚本 `TamagoCoachSteam.ts`，新对象 `StoveSet/Steam` (3, 3.6, 0)。两缕各 8 个拉长的柔边软斑（2.2 × 3.5 cm，白色，顶点透明度峰值 0.14，最多两个叠加约 26%，不超过 30%），从锅面上升 9 cm、1.8 s 一轮、S 形轻摆后淡出，同一个 MeshBuilder 逐帧改顶点。材质复用 ShadowSoft，renderOrder 6。`TamagoCoachMain` 只加了视图调用：进 Heat 且计时在跑时开，归零、切步、暂停时关，恢复时再开；Prep/Layer/Rest 不显示。
+2. **筷子和小碗**：新脚本 `TamagoCoachProps.ts`，新对象 `StoveSet/Props`，运行时生成 `Bowl`、`BowlEgg`、`Chopsticks`、`BowlShadow`。碗：24 段旋转体，中心 (18, 0, −10)，口径 8 cm、高 4 cm、底 4.5 cm、壁 0.4 cm，浅陶色 (0.93, 0.90, 0.85)，口沿下一圈 0.4 cm 靛蓝带，内侧带淡一点；碗底蛋液黄圆盘 Ø6.2 × 0.3 cm；碗下 8.2 cm 柔边阴影。筷子：两根 22 cm、Ø0.7→0.5 cm 的木色锥杆（和手柄同色），粗端放在锅与碗之间的台面上 (11.9, 0.25, −4.2) / (11.3, 0.25, −5.0)，斜搭在碗的近左沿（接触点沿杆 4.41 cm），尖端朝远右角升到 (24.1, 15.4, −14.5) / (23.5, 15.4, −15.3)，倾角 43.6°。间距核算（脚本启动时打印）：离卡片板体 4.79 cm、离手柄 3.05 cm、离锅壁 0.83 cm、全部在台面内（maxX 24.35、minZ −15.51）、不压卡片投影阴影、不挡锅/按钮/抓取条/卡片，用户视角里在台面右上角。材质复用 EggLogPBR（碗、蛋液盘）、HandleWoodPBR（筷子）、ShadowSoft（阴影），没有新建材质。
+3. **Done 脉冲**：第 6 步归零时六片切片按 0.15 s 逐片出现（`TamagoCoachEgg.showSlices(true)` 改成分 6 次重建网格，`sliceRevealSeconds` 输入）；卡片顶部强调线（`CardUI.pulseAccent`，蛋黄 → (1.0, 0.92, 0.70) → 回）和计时环（`RingMesh.colorPulse`，轨道/弧 → (1.0, 0.80, 0.55) → 回）一起做一次 0.6 s 的正弦暖色脉冲，只在 `done` 置真时触发一次，不循环，结束后精确恢复原色（悬停/暂停色仍优先）；`TamagoCoachMain` 新输入 `donePulseSeconds`（默认 0.6，截图时临时调到 12 秒再恢复）。原有的归零三次缩放脉冲不变。
+4. **Lens 图标**：`devpost/icon.png`（512×512，Pillow）：深色圆角底、石墨锅俯视轮廓加银边和手柄、锅里蛋黄色圆角方块、橙色向下箭头。通过 Editor API `project.metaInfo.setIcon()` 设置后 `isIconSet` 当场为 true（文件被拷到 `Cache/icon.png`），但过一会儿就自己回到默认图标，保存后 `TamagoCoach.esproj` 的 `iconHash` 仍为空；试了两次都一样，所以按约定只留文件，提交 Devpost 时在 Project Info 里手动选 `devpost/icon.png` 即可。
+
+改动的文件：新增 `Assets/Scripts/TamagoCoachSteam.ts`、`TamagoCoachProps.ts`（及 .meta）；修改 `TamagoCoachMain.ts`（新输入 steam、donePulseSeconds 和视图调用，测试 API 不变）、`TamagoCoachEgg.ts`、`TamagoCoachCardUI.ts`、`TamagoCoachRingMesh.ts`、`Assets/Scene.scene`（两个新对象、脚本输入值）；新增 `devpost/icon.png`。
+
+### 截图（用户视角，低头 32.7° 看台面中心）
+
+- `devpost/screenshots/polish2-prep.png` — Prep 全景，碗和筷子在台面右上角、手柄后方。
+- `devpost/screenshots/polish2-heat-steam.png` — Heat 0:54，两缕淡白蒸汽从锅面升向计时环。
+- `devpost/screenshots/polish2-done-pulse.png` — Rest & slice 归零、六片切片齐、环和强调线处于暖色脉冲中（脉冲时长临时延到 12 s 才截到，之后已恢复 0.6 s）。
+- 过程图：`wip-run3-props.png`、`wip-run3-steam.png`、`wip-run3-done.png`。
+
+### LEAF 重跑（全部改完、恢复旋钮并保存后，tc-01 → tc-07 串行，不改测试）
+
+`[3.506s]PASSED: tc-01-start-layout`、`[4.127s]PASSED: tc-02-steps`、`[10.021s]PASSED: tc-03-countdown-pause`、`[6.239s]PASSED: tc-04-roll-cue`、`[5.221s]PASSED: tc-05-grab-drag`、`[4.324s]PASSED: tc-06-ik-reach-next`、`[2.841s]PASSED: tc-07-demo-speed-api`（日志时间 17:57:46–17:59:12）。**7/7 通过。** tc-01 `distance=22.3 cm`；tc-05 拖动 8.90 cm、离轴 0.00；tc-06 Next 离头 76.1 cm。
+
+### 说明与遗留
+
+- 筷子倾角 43.6° 比预想的陡：碗高 4 cm 而粗端到碗沿的水平距离只有 4.4 cm（再远就贴到锅壁或手柄），要搭在碗沿上只能这么陡；尖端升到 15.6 cm 高，在视野内、离卡片 4.8 cm。要更平就得把碗放得离锅更远，但台面右边只剩 7 cm。
+- 蒸汽、脉冲在预览里都看得见；设备上蒸汽是白色半透明叠加，会比预览更亮一点，`maxAlpha` 输入可调。
+- Lens 图标未能通过 Editor API 持久设置（见上）。
+- 没有 git 提交。Lens Studio 在这一轮里又重启了两次（内存 6.2 GB、7.0 GB 各一次），结束时 3.4 GB，预览已回到 Prep。

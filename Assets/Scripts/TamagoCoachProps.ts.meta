@@ -1,0 +1,85 @@
+- !<AssetImportMetadata/086b685c-113d-463c-b160-e787861e5c4e>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> cbf53336-a0a7-406f-8b80-58747d39a1e2
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> cbf53336-a0a7-406f-8b80-58747d39a1e2
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 6018e789-d10f-4ce6-85bb-88aff4d7353c
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/6018e789-d10f-4ce6-85bb-88aff4d7353c>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  VersionPrerelease: ""
+  UpdateOrder: 0
+  ComponentUid: becf0415-b24b-4cf5-9789-6313dfa9aa26
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    bandColor: false
+    bowlCenter: false
+    bowlMaterial: false
+    ceramicColor: false
+    chopstickEnd: false
+    chopstickLengthCm: false
+    chopstickMaterial: false
+    eggColor: false
+    shadowAlpha: false
+    shadowMaterial: false
+    woodColor: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - bowlMaterial: !<reference.Material> 00000000-0000-0000-0000-000000000000
+      chopstickMaterial: !<reference.Material> 00000000-0000-0000-0000-000000000000
+      shadowMaterial: !<reference.Material> 00000000-0000-0000-0000-000000000000
+      bowlCenter: !<Vec2> {x: 18.000000, y: -10.000000}
+      chopstickEnd: !<Vec2> {x: 23.799999, y: -3.800000}
+      chopstickLengthCm: !<float> 11.000000
+      ceramicColor: !<Vec4> {x: 0.930000, y: 0.900000, z: 0.850000, w: 1.000000}
+      bandColor: !<Vec4> {x: 0.280000, y: 0.360000, z: 0.580000, w: 1.000000}
+      eggColor: !<Vec4> {x: 1.000000, y: 0.780000, z: 0.120000, w: 1.000000}
+      woodColor: !<Vec4> {x: 0.550000, y: 0.380000, z: 0.220000, w: 1.000000}
+      shadowAlpha: 0.180000
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">TamagoCoachProps – bowl, egg disc, chopsticks (static)</span>"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">References</span>"}'
+    - '// @ui {"widget":"group_start", "label":"References"}'
+    - '// @input Asset.Material bowlMaterial {"hint":"Lit PBR material for the bowl and the egg disc (EggLogPBR, roughness 0.4 = glazed)"}'
+    - '// @input Asset.Material chopstickMaterial {"hint":"Lit PBR material for the chopsticks (HandleWoodPBR)"}'
+    - '// @input Asset.Material shadowMaterial {"hint":"ShadowSoft (unlit vertex colour, no depth write) for the soft shadow under the bowl; none = no shadow"}'
+    - '// @ui {"widget":"group_end"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">Settings</span>"}'
+    - '// @ui {"widget":"group_start", "label":"Settings"}'
+    - '// @input vec2 bowlCenter = "{18,-10}" {"hint":"Bowl centre on the counter (x, z) in cm; the bowl is 8 cm wide and 4 cm tall"}'
+    - "// @input vec2 chopstickEnd = \"{11.6,-4.6}\" {\"hint\":\"Where the chopsticks' thick ends rest on the counter (x, z), between the pan and the bowl; the sticks aim at the bowl centre and lean on its near-left rim\"}"
+    - '// @input float chopstickLengthCm = 22 {"hint":"Chopstick length, cm; shortened in 0.5 cm steps only if the pose cannot clear the card, handle, pan body, counter edge and bowl at this length (printed at awake)", "widget":"slider", "min":6, "max":24, "step":0.5}'
+    - '// @input vec4 ceramicColor = "{0.93,0.90,0.85,1}" {"hint":"Ceramic glaze colour", "widget":"color"}'
+    - '// @input vec4 bandColor = "{0.28,0.36,0.58,1}" {"hint":"Indigo band just below the rim", "widget":"color"}'
+    - '// @input vec4 eggColor = "{1.0,0.78,0.12,1}" {"hint":"Beaten-egg disc colour", "widget":"color"}'
+    - '// @input vec4 woodColor = "{0.55,0.38,0.22,1}" {"hint":"Chopstick wood colour (same as the pan handle)", "widget":"color"}'
+    - "// @input float shadowAlpha = 0.18 {\"hint\":\"Opacity at the centre of the bowl's soft shadow (0 = none)\", \"widget\":\"slider\", \"min\":0, \"max\":0.5, \"step\":0.01}"
+    - '// @ui {"widget":"group_end"}'
