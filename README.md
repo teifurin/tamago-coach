@@ -4,6 +4,10 @@ A SPECS (Snap Spectacles) Lens that coaches a beginner through tamagoyaki, the J
 
 Built for the Devpost **Learn AR with SPECS** hackathon. Demo video: 【YouTube link】
 
+![Roll now: the ring hits zero, the card opens, and the arrow on the pan shows which way to roll](devpost/screenshots/polish1-rollnow.png)
+
+More views in [`devpost/screenshots/`](devpost/screenshots/): the Prep layout, a countdown with the card collapsed, and the six slices at Done.
+
 ## What it does
 
 - A virtual counter with a real-size tamagoyaki pan appears in front of you. Grab the bar on its near edge to move the whole set onto your own stove.

@@ -31,6 +31,7 @@
     centerSizeCm: false
     numberColor: false
     numberSize: false
+    numberWeight: false
     pauseColor: false
     pauseGlyph: false
     smallSize: false
@@ -49,6 +50,7 @@
     - centerSizeCm: !<float> 6.000000
       titleOffsetCm: 4.300000
       numberSize: !<float> 84.000000
+      numberWeight: !<float> 800.000000
       smallSize: !<float> 54.000000
       numberColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
       timeColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 1.000000, w: 0.900000}
@@ -66,6 +68,7 @@
     - '// @input float centerSizeCm = 6 {"hint":"Width/height of the centre text group, cm (fits inside the ring)", "widget":"slider", "min":3, "max":12, "step":0.5}'
     - '// @input float titleOffsetCm = 4.3 {"hint":"How far below the ring centre the title line sits, cm", "widget":"slider", "min":2, "max":10, "step":0.1}'
     - '// @input float numberSize = 84 {"hint":"Step number / pause glyph text size", "widget":"slider", "min":40, "max":140, "step":1}'
+    - '// @input float numberWeight = 800 {"hint":"Step number font weight (800 = extra bold; the font falls back to its heaviest weight if 800 is missing)", "widget":"slider", "min":100, "max":900, "step":100}'
     - '// @input float smallSize = 54 {"hint":"Remaining-time and title text size (54 keeps cap height >= 0.8 cm)", "widget":"slider", "min":40, "max":100, "step":1}'
     - '// @input vec4 numberColor = "{1,1,1,1}" {"hint":"Step number colour", "widget":"color"}'
     - '// @input vec4 timeColor = "{1,1,1,0.9}" {"hint":"Remaining-time colour", "widget":"color"}'

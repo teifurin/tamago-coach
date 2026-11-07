@@ -1,0 +1,124 @@
+- !<AssetImportMetadata/97c1ba8b-6176-495c-9119-138ffd247b11>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 3189ed44-3980-4920-b421-0a06e0f0628c
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 3189ed44-3980-4920-b421-0a06e0f0628c
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> c0ab663a-ad35-4a35-8bbd-22fd8e59b043
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/c0ab663a-ad35-4a35-8bbd-22fd8e59b043>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  VersionPrerelease: ""
+  UpdateOrder: 0
+  ComponentUid: 414e4e1c-6193-402f-8246-eaaccd194873
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    cardLengthCm: false
+    cardObject: false
+    cardWidthCm: false
+    cardX: false
+    cardZ: false
+    clampZMax: false
+    controlsLengthCm: false
+    controlsWidthCm: false
+    controlsX: false
+    controlsZ: false
+    fadeFrom: false
+    haloAlpha: false
+    haloBehindCm: false
+    haloCornerCm: false
+    haloHeightCm: false
+    haloWidthCm: false
+    liftCm: false
+    material: false
+    maxAlpha: false
+    panLengthCm: false
+    panWidthCm: false
+    panX: false
+    panZ: false
+    segments: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - material: !<reference.Material> 00000000-0000-0000-0000-000000000000
+      cardObject: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      liftCm: 0.050000
+      maxAlpha: 0.200000
+      fadeFrom: 0.650000
+      segments: !<float> 32.000000
+      clampZMax: 17.400000
+      panX: !<float> 3.000000
+      panZ: !<float> 0.000000
+      panWidthCm: !<float> 19.000000
+      panLengthCm: !<float> 23.000000
+      controlsX: -12.500000
+      controlsZ: 11.500000
+      controlsWidthCm: !<float> 12.000000
+      controlsLengthCm: !<float> 14.000000
+      cardX: !<float> 3.000000
+      cardZ: !<float> -14.000000
+      cardWidthCm: !<float> 22.000000
+      cardLengthCm: !<float> 6.000000
+      haloWidthCm: !<float> 26.000000
+      haloHeightCm: !<float> 14.000000
+      haloAlpha: 0.100000
+      haloBehindCm: 0.500000
+      haloCornerCm: !<float> 2.000000
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">TamagoCoachContactShadows – faux shadows and card halo</span>"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">References</span>"}'
+    - '// @ui {"widget":"group_start", "label":"References"}'
+    - '// @input Asset.Material material {"hint":"ShadowSoft: unlit vertex-colour material, blendMode Normal, depthWrite off"}'
+    - '// @input SceneObject cardObject {"hint":"The step card (StepCard); a CardHalo child is created behind it at runtime"}'
+    - '// @ui {"widget":"group_end"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">Settings</span>"}'
+    - '// @ui {"widget":"group_start", "label":"Settings"}'
+    - '// @input float liftCm = 0.05 {"hint":"Height of the shadow discs above the counter top, cm", "widget":"slider", "min":0, "max":1, "step":0.01}'
+    - '// @input float maxAlpha = 0.2 {"hint":"Opacity at the centre of each shadow", "widget":"slider", "min":0, "max":1, "step":0.01}'
+    - '// @input float fadeFrom = 0.65 {"hint":"Fraction of the radius that stays fully dark before the fade to the edge", "widget":"slider", "min":0, "max":1, "step":0.01}'
+    - '// @input float segments = 32 {"hint":"Segments around each disc", "widget":"slider", "min":8, "max":64, "step":1}'
+    - "// @input float clampZMax = 17.4 {\"hint\":\"Shadows never reach past this local z (the counter's near edge minus a margin), cm\"}"
+    - // @input float panX = 3
+    - // @input float panZ
+    - // @input float panWidthCm = 19
+    - // @input float panLengthCm = 23
+    - // @input float controlsX = -12.5
+    - // @input float controlsZ = 11.5
+    - // @input float controlsWidthCm = 12
+    - // @input float controlsLengthCm = 14
+    - // @input float cardX = 3
+    - // @input float cardZ = -14
+    - // @input float cardWidthCm = 22
+    - // @input float cardLengthCm = 6
+    - // @input float haloWidthCm = 26
+    - // @input float haloHeightCm = 14
+    - '// @input float haloAlpha = 0.1 {"hint":"Opacity of the card halo", "widget":"slider", "min":0, "max":1, "step":0.01}'
+    - '// @input float haloBehindCm = 0.5 {"hint":"Distance of the halo behind the card plane, cm"}'
+    - // @input float haloCornerCm = 2
+    - '// @ui {"widget":"group_end"}'

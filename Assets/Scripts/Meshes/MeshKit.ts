@@ -4,8 +4,9 @@
  * Vertex layout: position(3) normal(3) color(4). Topology Triangles, indices UInt16.
  * Every triangle is auto-oriented against the outward normal it is given, so all
  * faces wind counter-clockwise when seen from outside (Lens Studio culls back faces).
- * Colours are "baked": an unlit vertex-colour material shows no lighting, so each
- * face gets a tint by its normal (top brightest, bottom darkest) to keep edges readable.
+ * Colours are "baked": on the unlit vertex-colour material each face gets a tint by its
+ * normal (`defaultTint`, top brightest, bottom darkest) to keep edges readable; meshes on a
+ * lit PBR material use the much milder `litTint` and let the light do the shading.
  *
  * Units are centimetres. This file is a module (no @component); import it from
  * a component script with:  import { MeshWriter } from "./MeshKit";
@@ -15,8 +16,10 @@ export type Vec2 = [number, number];
 export type Vec3 = [number, number, number];
 export type RGBA = [number, number, number, number];
 export type Tint = (normal: Vec3) => number;
+/** A 2D outline point with its outward unit normal (see `roundedRect`). */
+export type OutlinePoint = { p: Vec2; n: Vec2 };
 
-/** Default baked shading: top 1.0, front/back 0.86, left/right 0.74, bottom 0.6. */
+/** Default baked shading for the UNLIT material: top 1.0, front/back 0.86, left/right 0.74, bottom 0.6. */
 export function defaultTint(n: Vec3): number {
   if (n[1] > 0.5) return 1.0;
   if (n[1] < -0.5) return 0.6;
@@ -24,8 +27,62 @@ export function defaultTint(n: Vec3): number {
   return 0.74;
 }
 
+/** Milder baked shading for meshes on a LIT (PBR) material: top 1.0, vertical faces 0.95, bottom 0.9. */
+export function litTint(n: Vec3): number {
+  if (n[1] > 0.5) return 1.0;
+  if (n[1] < -0.5) return 0.9;
+  return 0.95;
+}
+
 export function scaleColor(c: RGBA, k: number): RGBA {
   return [c[0] * k, c[1] * k, c[2] * k, c[3]];
+}
+
+export function lerpColor(a: RGBA, b: RGBA, t: number): RGBA {
+  return [
+    a[0] + (b[0] - a[0]) * t,
+    a[1] + (b[1] - a[1]) * t,
+    a[2] + (b[2] - a[2]) * t,
+    a[3] + (b[3] - a[3]) * t,
+  ];
+}
+
+export function normalize3(v: Vec3): Vec3 {
+  const l = Math.hypot(v[0], v[1], v[2]) || 1;
+  return [v[0] / l, v[1] / l, v[2] / l];
+}
+
+/** Deterministic hash noise in [-1, 1] for an integer lattice point: same input, same output, every run. */
+export function hashNoise(i: number, j: number, seed: number = 0): number {
+  let h = Math.imul(i + 1, 374761393) + Math.imul(j + 1, 668265263) + Math.imul(seed + 1, 1274126177);
+  h = Math.imul(h ^ (h >>> 13), 1103515245);
+  h ^= h >>> 16;
+  return ((h >>> 0) % 20001) / 10000 - 1;
+}
+
+/**
+ * Rounded-rectangle outline in a 2D (u, v) frame: half sizes `hu` / `hv`, corner radius `r`,
+ * `segs` arc segments per corner. Points come in increasing-angle order (CCW in (u, v)) with the
+ * outward unit normal at every point: smooth around the corners, flat along the straight edges
+ * (the two arc end points that bound a straight edge both carry that edge's normal).
+ * Two outlines built with the same `segs` are index-matched, which the ring builders rely on;
+ * outlines that share corner centres (hu - r equal, hv - r equal) stay concentric.
+ */
+export function roundedRect(hu: number, hv: number, r: number, segs: number): OutlinePoint[] {
+  const rr = Math.max(0.01, Math.min(r, hu, hv));
+  const cu = hu - rr;
+  const cv = hv - rr;
+  const corners: Vec2[] = [[cu, cv], [-cu, cv], [-cu, -cv], [cu, -cv]];
+  const out: OutlinePoint[] = [];
+  const n = Math.max(1, Math.round(segs));
+  for (let c = 0; c < 4; c++) {
+    for (let k = 0; k <= n; k++) {
+      const a = (Math.PI / 2) * (c + k / n);
+      const nrm: Vec2 = [Math.cos(a), Math.sin(a)];
+      out.push({ p: [corners[c][0] + rr * nrm[0], corners[c][1] + rr * nrm[1]], n: nrm });
+    }
+  }
+  return out;
 }
 
 function pointInTri(p: Vec2, a: Vec2, b: Vec2, c: Vec2): boolean {
@@ -62,6 +119,16 @@ export function triangulate2D(poly: Vec2[]): number[] {
   }
   if (V.length === 3) tris.push(V[0], V[1], V[2]);
   return tris;
+}
+
+/** Returns the polygon in CCW (u,v) order (a reversed copy when the input is CW). */
+export function ccw(polyIn: Vec2[]): Vec2[] {
+  let area2 = 0;
+  for (let k = 0; k < polyIn.length; k++) {
+    const p = polyIn[k], q = polyIn[(k + 1) % polyIn.length];
+    area2 += p[0] * q[1] - q[0] * p[1];
+  }
+  return area2 < 0 ? polyIn.slice().reverse() : polyIn;
 }
 
 export class MeshWriter {
@@ -116,6 +183,27 @@ export class MeshWriter {
   }
 
   /**
+   * Quad with per-vertex normals and colours (smooth shading / colour gradients). The winding
+   * is fixed against `outward` (default: the sum of the four normals).
+   */
+  quad(p: Vec3[], n: Vec3[], c: RGBA[], outward?: Vec3): void {
+    const o: Vec3 = outward
+      ? outward
+      : [n[0][0] + n[1][0] + n[2][0] + n[3][0], n[0][1] + n[1][1] + n[2][1] + n[3][1], n[0][2] + n[1][2] + n[2][2] + n[3][2]];
+    const base = this.count;
+    for (let k = 0; k < 4; k++) this.vertex(p[k], n[k], c[k]);
+    this.tri(base, base + 1, base + 2, o);
+    this.tri(base, base + 2, base + 3, o);
+  }
+
+  /** Triangle with per-vertex normals and colours; winding fixed against `outward`. */
+  tri3(p: Vec3[], n: Vec3[], c: RGBA[], outward: Vec3): void {
+    const base = this.count;
+    for (let k = 0; k < 3; k++) this.vertex(p[k], n[k], c[k]);
+    this.tri(base, base + 1, base + 2, outward);
+  }
+
+  /**
    * Axis-aligned box from `min` corner to `max` corner, 24 vertices (4 per face,
    * each face carrying its own normal and tinted colour). `topColor` optionally
    * overrides the colour of the +Y face only.
@@ -143,29 +231,30 @@ export class MeshWriter {
    * Any polygon orientation is accepted (it is normalised to CCW in (u,v) first).
    */
   prismY(polyIn: Vec2[], yBottom: number, yTop: number, color: RGBA, tint: Tint = defaultTint): void {
-    let poly = polyIn;
-    let area2 = 0;
-    for (let k = 0; k < poly.length; k++) {
-      const p = poly[k], q = poly[(k + 1) % poly.length];
-      area2 += p[0] * q[1] - q[0] * p[1];
-    }
-    if (area2 < 0) poly = poly.slice().reverse();
+    this.prismYShaded(polyIn, yBottom, yTop, () => color, tint);
+  }
 
+  /**
+   * Like `prismY`, but the colour is sampled per outline point through `colorAt(u, v)`, so a
+   * gradient along the outline is interpolated across the top, bottom and side faces.
+   */
+  prismYShaded(polyIn: Vec2[], yBottom: number, yTop: number, colorAt: (u: number, v: number) => RGBA, tint: Tint = defaultTint): void {
+    const poly = ccw(polyIn);
     const n = poly.length;
     const tris = triangulate2D(poly);
     const topN: Vec3 = [0, 1, 0];
     const botN: Vec3 = [0, -1, 0];
+    const topK = tint(topN);
+    const botK = tint(botN);
 
     const topBase = this.count;
-    const topC = scaleColor(color, tint(topN));
-    for (const p of poly) this.vertex([p[0], yTop, p[1]], topN, topC);
+    for (const p of poly) this.vertex([p[0], yTop, p[1]], topN, scaleColor(colorAt(p[0], p[1]), topK));
     for (let t = 0; t < tris.length; t += 3) {
       this.tri(topBase + tris[t], topBase + tris[t + 1], topBase + tris[t + 2], topN);
     }
 
     const botBase = this.count;
-    const botC = scaleColor(color, tint(botN));
-    for (const p of poly) this.vertex([p[0], yBottom, p[1]], botN, botC);
+    for (const p of poly) this.vertex([p[0], yBottom, p[1]], botN, scaleColor(colorAt(p[0], p[1]), botK));
     for (let t = 0; t < tris.length; t += 3) {
       this.tri(botBase + tris[t], botBase + tris[t + 1], botBase + tris[t + 2], botN);
     }
@@ -176,16 +265,20 @@ export class MeshWriter {
       const len = Math.hypot(du, dv) || 1;
       // Right-hand perpendicular of the edge = outward for a CCW polygon in (u,v).
       const sn: Vec3 = [dv / len, 0, -du / len];
-      this.face(
+      const k0 = tint(sn);
+      const c0 = scaleColor(colorAt(p0[0], p0[1]), k0);
+      const c1 = scaleColor(colorAt(p1[0], p1[1]), k0);
+      this.quad(
         [[p0[0], yBottom, p0[1]], [p1[0], yBottom, p1[1]], [p1[0], yTop, p1[1]], [p0[0], yTop, p0[1]]],
+        [sn, sn, sn, sn],
+        [c0, c1, c1, c0],
         sn,
-        scaleColor(color, tint(sn)),
       );
     }
   }
 
-  /** Upload everything to a RenderMeshVisual and assign the material. */
-  commit(rmv: RenderMeshVisual, material: Material | undefined): void {
+  /** Upload everything to a RenderMeshVisual and assign the material (if one is given). */
+  commit(rmv: RenderMeshVisual, material: Material | undefined | null): void {
     this.builder.appendVerticesInterleaved(this.verts);
     this.builder.appendIndices(this.indices);
     rmv.mesh = this.builder.getMesh();

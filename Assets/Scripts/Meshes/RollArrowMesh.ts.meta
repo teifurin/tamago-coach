@@ -30,13 +30,23 @@
   ScriptInputsHidden:
     animate: false
     arrowLength: false
+    baseAlpha: false
+    drawOrder: false
+    ghostCount: false
+    headColor: false
     headLength: false
     headWidth: false
     material: false
+    pulseAlphaMin: false
+    pulseHz: false
+    pulseScaleMax: false
     shaftWidth: false
+    sweepCount: false
     sweepDistance: false
     sweepSeconds: false
+    tailColor: false
     thickness: false
+    trailSeconds: false
   ScriptTypesHidden:
     {}
   ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
@@ -52,9 +62,19 @@
       headWidth: !<float> 7.000000
       shaftWidth: !<float> 3.000000
       thickness: 0.300000
+      tailColor: !<Vec4> {x: 1.000000, y: 0.550000, z: 0.100000, w: 1.000000}
+      headColor: !<Vec4> {x: 1.000000, y: 0.920000, z: 0.350000, w: 1.000000}
       animate: true
       sweepDistance: !<float> 4.000000
       sweepSeconds: 1.200000
+      sweepCount: !<float> 3.000000
+      trailSeconds: 0.400000
+      ghostCount: !<float> 3.000000
+      baseAlpha: 0.700000
+      pulseAlphaMin: 0.550000
+      pulseScaleMax: 1.040000
+      pulseHz: 1.500000
+      drawOrder: !<float> 2.000000
   ScriptTypes:
     -
       {}
@@ -64,7 +84,17 @@
     - // @input float headLength = 4.5
     - // @input float headWidth = 7
     - // @input float shaftWidth = 3
-    - // @input float thickness = 0.3
+    - // @input float thickness = 0.8
+    - '// @input vec4 tailColor = "{1.0,0.55,0.10,1}" {"hint":"Vertex colour at the tail (far end)", "widget":"color"}'
+    - '// @input vec4 headColor = "{1.0,0.92,0.35,1}" {"hint":"Vertex colour at the head (tip, toward the user)", "widget":"color"}'
     - // @input bool animate = true
-    - // @input float sweepDistance = 4
-    - // @input float sweepSeconds = 1.2
+    - '// @input float sweepDistance = 8 {"hint":"Travel along local +Z per sweep, cm"}'
+    - '// @input float sweepSeconds = 1.2 {"hint":"Duration of one sweep, seconds (ease-out)"}'
+    - '// @input float sweepCount = 3 {"hint":"Number of sweeps before the arrow rests at the near end and pulses"}'
+    - '// @input float trailSeconds = 0.4 {"hint":"How far behind the arrow the last ghost trails, seconds"}'
+    - '// @input float ghostCount = 3 {"hint":"Ghost copies in the trail (0..3)"}'
+    - '// @input float baseAlpha = 0.7 {"hint":"Arrow opacity while sweeping and at the top of the pulse"}'
+    - '// @input float pulseAlphaMin = 0.55 {"hint":"Arrow opacity at the bottom of the pulse"}'
+    - '// @input float pulseScaleMax = 1.04 {"hint":"Peak scale of the resting pulse"}'
+    - '// @input float pulseHz = 1.5 {"hint":"Resting pulse rate, Hz"}'
+    - '// @input float drawOrder = 2 {"hint":"Render order of the translucent arrow (after the egg layer); ghosts use the next values"}'

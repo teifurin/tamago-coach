@@ -28,13 +28,22 @@
   ExportUid: 00000000-0000-0000-0000-000000000000
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
+    bandTint: false
+    bandWidthCm: false
+    cutFaceTint: false
+    freshAlpha: false
     freshColor: false
+    freshRoughness: false
     layerLengthCm: false
+    layerMaterial: false
     layerObject: false
+    layerRenderOrder: false
     layerThicknessCm: false
     layerWidthCm: false
+    logBands: false
     logColor: false
     logLengthCm: false
+    logMaterial: false
     logObject: false
     logRadius1Cm: false
     logRadius2Cm: false
@@ -42,6 +51,7 @@
     material: false
     panInnerLengthCm: false
     setColor: false
+    setRoughness: false
     sliceCount: false
     sliceGapCm: false
     slicesObject: false
@@ -58,12 +68,21 @@
       logObject: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
       slicesObject: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
       material: !<reference.Material> 00000000-0000-0000-0000-000000000000
+      layerMaterial: !<reference.Material> 00000000-0000-0000-0000-000000000000
+      logMaterial: !<reference.Material> 00000000-0000-0000-0000-000000000000
       layerWidthCm: 12.400000
       layerLengthCm: 16.400000
       layerThicknessCm: 0.500000
       freshColor: !<Vec4> {x: 1.000000, y: 0.800000, z: 0.120000, w: 1.000000}
       setColor: !<Vec4> {x: 0.980000, y: 0.930000, z: 0.660000, w: 1.000000}
+      freshRoughness: 0.150000
+      setRoughness: 0.800000
+      freshAlpha: 0.900000
       logColor: !<Vec4> {x: 0.980000, y: 0.860000, z: 0.360000, w: 1.000000}
+      logBands: !<float> 4.000000
+      bandWidthCm: 0.600000
+      bandTint: 0.900000
+      cutFaceTint: 1.080000
       logLengthCm: 11.500000
       logRadius1Cm: 1.300000
       logRadius2Cm: 1.900000
@@ -71,6 +90,7 @@
       panInnerLengthCm: !<float> 18.000000
       sliceCount: !<float> 6.000000
       sliceGapCm: 0.400000
+      layerRenderOrder: !<float> 1.000000
   ScriptTypes:
     -
       {}
@@ -82,7 +102,9 @@
     - "// @input SceneObject layerObject {\"hint\":\"Authored child SceneObject 'EggLayer' (flat cooking layer)\"}"
     - "// @input SceneObject logObject {\"hint\":\"Authored child SceneObject 'EggLog' (rolled log)\"}"
     - "// @input SceneObject slicesObject {\"hint\":\"Authored child SceneObject 'EggSlices' (six slices at Done)\"}"
-    - '// @input Asset.Material material {"hint":"Unlit vertex-colour material (vertexBaseColorMaterial)"}'
+    - '// @input Asset.Material material {"hint":"Fallback vertex-colour material, used for any part without its own material"}'
+    - '// @input Asset.Material layerMaterial {"hint":"Lit PBR material for the cooking layer (EggLayerPBR, blendMode Normal); cloned at runtime so roughness and alpha can follow readiness"}'
+    - '// @input Asset.Material logMaterial {"hint":"Lit PBR material for the log and the slices (EggLogPBR, roughness 0.4)"}'
     - '// @ui {"widget":"group_end"}'
     - '// @ui {"widget":"separator"}'
     - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">Settings</span>"}'
@@ -90,9 +112,16 @@
     - "// @input float layerWidthCm = 12.4 {\"hint\":\"Layer width along X, cm (slightly inside the pan's 13 cm interior)\", \"widget\":\"slider\", \"min\":5, \"max\":20, \"step\":0.1}"
     - "// @input float layerLengthCm = 16.4 {\"hint\":\"Layer length along Z, cm (slightly inside the pan's 18 cm interior)\", \"widget\":\"slider\", \"min\":5, \"max\":25, \"step\":0.1}"
     - '// @input float layerThicknessCm = 0.5 {"hint":"Layer thickness, cm", "widget":"slider", "min":0.1, "max":2, "step":0.1}'
-    - '// @input vec4 freshColor = "{1.0,0.80,0.12,1}" {"hint":"Layer colour when just poured (glossy, bright yellow)", "widget":"color"}'
-    - '// @input vec4 setColor = "{0.98,0.93,0.66,1}" {"hint":"Layer colour when set and ready to roll (paler, matte)", "widget":"color"}'
-    - '// @input vec4 logColor = "{0.98,0.86,0.36,1}" {"hint":"Colour of the rolled log and the slices", "widget":"color"}'
+    - '// @input vec4 freshColor = "{1.0,0.78,0.12,1}" {"hint":"Layer colour when just poured (saturated warm yellow, glossy)", "widget":"color"}'
+    - '// @input vec4 setColor = "{0.98,0.92,0.66,1}" {"hint":"Layer colour when set and ready to roll (pale, matte)", "widget":"color"}'
+    - '// @input float freshRoughness = 0.15 {"hint":"Layer roughness when just poured (glossy)", "widget":"slider", "min":0, "max":1, "step":0.01}'
+    - '// @input float setRoughness = 0.8 {"hint":"Layer roughness when set (matte)", "widget":"slider", "min":0, "max":1, "step":0.01}'
+    - '// @input float freshAlpha = 0.9 {"hint":"Layer opacity when just poured (1 = opaque); set egg is always opaque", "widget":"slider", "min":0.5, "max":1, "step":0.01}'
+    - '// @input vec4 logColor = "{0.93,0.72,0.22,1}" {"hint":"Colour of the rolled log and the slices (golden, one step darker than the layer)", "widget":"color"}'
+    - '// @input float logBands = 4 {"hint":"Number of slightly darker bands around the log along its length (layered look)", "widget":"slider", "min":0, "max":6, "step":1}'
+    - '// @input float bandWidthCm = 0.6 {"hint":"Width of each darker band along X, cm", "widget":"slider", "min":0.2, "max":2, "step":0.1}'
+    - '// @input float bandTint = 0.9 {"hint":"Band brightness relative to the log colour", "widget":"slider", "min":0.7, "max":1, "step":0.01}'
+    - '// @input float cutFaceTint = 1.08 {"hint":"Brightness of the cut faces (the +-X caps) relative to the log colour", "widget":"slider", "min":1, "max":1.3, "step":0.01}'
     - '// @input float logLengthCm = 11.5 {"hint":"Log length along X, cm", "widget":"slider", "min":4, "max":18, "step":0.5}'
     - '// @input float logRadius1Cm = 1.3 {"hint":"Log radius after the first roll, cm", "widget":"slider", "min":0.5, "max":4, "step":0.1}'
     - '// @input float logRadius2Cm = 1.9 {"hint":"Log radius after the second roll, cm", "widget":"slider", "min":0.5, "max":4, "step":0.1}'
@@ -100,4 +129,5 @@
     - '// @input float panInnerLengthCm = 18 {"hint":"Pan interior length along Z, cm (keeps the log inside the far wall)", "widget":"slider", "min":10, "max":25, "step":0.5}'
     - '// @input float sliceCount = 6 {"hint":"Number of slices shown at Done", "widget":"slider", "min":2, "max":10, "step":1}'
     - '// @input float sliceGapCm = 0.4 {"hint":"Gap between slices, cm", "widget":"slider", "min":0, "max":2, "step":0.1}'
+    - '// @input float layerRenderOrder = 1 {"hint":"Render order of the translucent layer (drawn after the opaque pan, whatever the hierarchy order)", "widget":"slider", "min":0, "max":10, "step":1}'
     - '// @ui {"widget":"group_end"}'

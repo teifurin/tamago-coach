@@ -5,8 +5,8 @@
     - !<own> 0005641c-028d-459a-0000-000000014b4d
     - !<own> f5d74682-203a-4970-81ea-9fa7b88c96bb
     - !<own> 99e95ccf-cf81-4db8-ad80-65a0427d94a1
-    - !<own> 012f6188-f27c-4cb4-9e91-2fa8d8d1f07a
     - !<own> 931d38db-78c8-4f9c-8b33-8b8c3566f8ad
+    - !<own> d9f3c218-6bc2-4f09-8fef-db0920377b34
   layers: !<Layers/267ee9a7-aff2-4f9d-9a49-f71214747d03>
     userLayers:
       - id: 1
@@ -91,7 +91,7 @@
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 40.000000, y: 85.000000, z: 20.000000}
-    Rotation: {x: 70.000000, y: 10.000000, z: 150.000000}
+    Rotation: {x: -55.000000, y: -35.000000, z: 0.000000}
     Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
     HasSegmentScaleCompensation: false
   Children:
@@ -105,7 +105,7 @@
   Enabled: true
   renderLayer: 1310719
   LightType: Directional
-  Intensity: 1.000000
+  Intensity: 1.150000
   ShadowDensity: 0.440000
   ShadowBlurRadius: 4.000000
   ShadowTextureSize: 512
@@ -123,7 +123,7 @@
   DiffuseEnvTexture: !<reference> 00000000-0000-0000-0000-000000000000
   SpecularEnvTexture: !<reference> 00000000-0000-0000-0000-000000000000
   SpecularCubemapTexture: !<reference> 00000000-0000-0000-0000-000000000000
-  Color: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  Color: {x: 1.000000, y: 0.950000, z: 0.860000, w: 1.000000}
   ShadowColor: {x: 0.000000, y: 0.000000, z: 0.000000, w: 1.000000}
   DynamicEnvInputTexture: !<reference> 00000000-0000-0000-0000-000000000000
   InnerConeAngle: 0.000000
@@ -152,7 +152,7 @@
   Name: Light Source
   Enabled: true
   renderLayer: 1310719
-  LightType: Ambient
+  LightType: EnvMap
   Intensity: 1.000000
   ShadowDensity: 1.000000
   ShadowBlurRadius: 0.000000
@@ -194,21 +194,6 @@
     - !<own> 276368e3-f687-4cc6-947d-24de3a78c9af
   Components:
     []
-- !<SceneObject/012f6188-f27c-4cb4-9e91-2fa8d8d1f07a>
-  PrefabRemaps:
-    []
-  Name: LEAF Plugin Bridge
-  Enabled: true
-  Layers: 1
-  LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
-    HasSegmentScaleCompensation: false
-  Children:
-    []
-  Components:
-    - !<own> 1cb1fcb2-ae9f-41f5-b48c-d2b6860d0b15
 - !<SceneObject/0451d993-a1f7-464e-9b69-32c0d9af8ed7>
   PrefabRemaps:
     []
@@ -264,28 +249,47 @@
     innerWidth: true
     innerLength: true
     depth: true
-    wallThickness: true
     floorThickness: true
     rimHeight: true
-    rimOverhang: true
+    cornerRadius: true
+    cornerSegments: true
     handleLength: true
+    handleMetalLength: true
     handleWidth: true
     handleThickness: true
+    handleCornerRadius: true
+    handleTiltDeg: true
+    bodyColor: true
+    rimColor: true
+    handleMetalColor: true
+    handleWoodColor: true
+    innerWallTint: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
     "":
-      material: !<reference.Material> 70d03593-c7b4-410a-ae5c-75cb82ee32dc
+      material: !<reference.Material> 2b6176b3-2ec4-4b5a-8de7-d5e3341129ba
+      rimMaterial: !<reference.Material> 9bfbc67e-6313-4e21-9b84-9022c6e9e832
+      handleWoodMaterial: !<reference.Material> aeac220c-f57c-4d1f-aafa-36f1ca0d6b1e
       innerWidth: !<float> 13.000000
       innerLength: !<float> 18.000000
       depth: !<float> 3.000000
-      wallThickness: 0.800000
+      wallThickness: 0.600000
       floorThickness: 0.600000
       rimHeight: 0.500000
-      rimOverhang: 0.300000
+      cornerRadius: 1.500000
+      cornerSegments: !<float> 8.000000
       handleLength: !<float> 12.000000
+      handleMetalLength: !<float> 5.000000
       handleWidth: 2.500000
       handleThickness: 1.500000
+      handleCornerRadius: 0.600000
+      handleTiltDeg: !<float> 8.000000
+      bodyColor: !<Vec4> {x: 0.360000, y: 0.370000, z: 0.400000, w: 1.000000}
+      rimColor: !<Vec4> {x: 0.880000, y: 0.890000, z: 0.920000, w: 1.000000}
+      handleMetalColor: !<Vec4> {x: 0.420000, y: 0.420000, z: 0.450000, w: 1.000000}
+      handleWoodColor: !<Vec4> {x: 0.550000, y: 0.380000, z: 0.220000, w: 1.000000}
+      innerWallTint: 1.080000
   ScriptTypes:
     "":
       {}
@@ -296,13 +300,12 @@
   Enabled: true
   ScriptAsset: !<reference> d17b0bf8-f0c7-4cc5-9fa0-4b7ceb0a25eb
   ScriptInputsDefault:
-    tiltDeg: true
     smoothing: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
     "":
-      tiltDeg: !<float> 30.000000
+      tiltDeg: !<float> 55.000000
       smoothing: 0.250000
   ScriptTypes:
     "":
@@ -405,6 +408,7 @@
     HasSegmentScaleCompensation: false
   Children:
     - !<own> c670a835-3084-4228-9b53-8a85c1d0fac5
+    - !<own> aae69426-c121-45e1-8d4a-af105b46edcf
     - !<own> d33295b8-bd49-4d0b-831f-5f1ac7b61559
     - !<own> 8a2b325c-7583-4835-9b5f-4a4e43ab9bd4
     - !<own> 894e7b55-0d73-4808-ba05-7b4535a568be
@@ -528,8 +532,8 @@
   ScriptAsset: !<reference> 557eb560-94b7-4edf-b244-ce14b5e54c76
   ScriptInputsDefault:
     centerSizeCm: true
-    titleOffsetCm: true
     numberSize: true
+    numberWeight: true
     smallSize: true
     numberColor: true
     timeColor: true
@@ -541,8 +545,9 @@
   ScriptInputs:
     "":
       centerSizeCm: !<float> 6.000000
-      titleOffsetCm: 4.300000
+      titleOffsetCm: !<float> 4.000000
       numberSize: !<float> 84.000000
+      numberWeight: !<float> 800.000000
       smallSize: !<float> 54.000000
       numberColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
       timeColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 1.000000, w: 0.900000}
@@ -647,7 +652,7 @@
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
-    Position: {x: 3.000000, y: 2.300000, z: 0.000000}
+    Position: {x: 3.000000, y: 4.200000, z: 1.500000}
     Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
     Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
     HasSegmentScaleCompensation: false
@@ -670,22 +675,6 @@
     []
   Components:
     []
-- !<ScriptComponent/1cb1fcb2-ae9f-41f5-b48c-d2b6860d0b15>
-  PrefabRemaps:
-    []
-  Name: MessagingBridge
-  Enabled: true
-  ScriptAsset: !<reference> 9aa407db-2872-4afc-a162-cf7faf2a0f29
-  ScriptInputsDefault:
-    {}
-  ScriptTypesDefault:
-    {}
-  ScriptInputs:
-    "":
-      {}
-  ScriptTypes:
-    "":
-      {}
 - !<SceneObject/1f18b5fe-d9a8-4680-8b57-fa21cf575485>
   PrefabRemaps:
     []
@@ -751,6 +740,66 @@
     - !<own> 83ef588c-5040-4344-b15f-0554c739da0b
   Components:
     []
+- !<ScriptComponent/2341bd26-0a9d-4eea-b6ff-3cb1da2bb8a6>
+  PrefabRemaps:
+    []
+  Name: TamagoCoachContactShadows
+  Enabled: true
+  ScriptAsset: !<reference> 3189ed44-3980-4920-b421-0a06e0f0628c
+  ScriptInputsDefault:
+    liftCm: true
+    maxAlpha: true
+    fadeFrom: true
+    segments: true
+    clampZMax: true
+    panX: true
+    panZ: true
+    panWidthCm: true
+    panLengthCm: true
+    controlsX: true
+    controlsZ: true
+    controlsWidthCm: true
+    controlsLengthCm: true
+    cardX: true
+    cardZ: true
+    cardWidthCm: true
+    cardLengthCm: true
+    haloWidthCm: true
+    haloHeightCm: true
+    haloAlpha: true
+    haloBehindCm: true
+    haloCornerCm: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      material: !<reference.Material> 1feab497-f103-4c96-bcde-827c92b9b3a3
+      cardObject: !<reference.SceneObject> c3338bd1-345e-4453-a6ec-de3a4982c49e
+      liftCm: 0.050000
+      maxAlpha: 0.200000
+      fadeFrom: 0.650000
+      segments: !<float> 32.000000
+      clampZMax: 17.400000
+      panX: !<float> 3.000000
+      panZ: !<float> 0.000000
+      panWidthCm: !<float> 19.000000
+      panLengthCm: !<float> 23.000000
+      controlsX: -12.500000
+      controlsZ: 11.500000
+      controlsWidthCm: !<float> 12.000000
+      controlsLengthCm: !<float> 14.000000
+      cardX: !<float> 3.000000
+      cardZ: !<float> -14.000000
+      cardWidthCm: !<float> 22.000000
+      cardLengthCm: !<float> 6.000000
+      haloWidthCm: !<float> 26.000000
+      haloHeightCm: !<float> 14.000000
+      haloAlpha: 0.100000
+      haloBehindCm: 0.500000
+      haloCornerCm: !<float> 2.000000
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/23861703-e5d4-4885-be1b-c3358c1877a4>
   PrefabRemaps:
     []
@@ -1219,10 +1268,12 @@
   ScriptAsset: !<reference> f0a19bda-6387-47ec-b2a1-c544aa371d2f
   ScriptInputsDefault:
     widthCm: true
-    heightCm: true
-    depthCm: true
-    barColor: true
-    hoverColor: true
+    ridgeCount: true
+    ridgeSpacingCm: true
+    ridgeRadiusScale: true
+    ridgeWidthCm: true
+    segments: true
+    capRings: true
     colliderPaddingCm: true
     debugCollider: true
   ScriptTypesDefault:
@@ -1230,12 +1281,18 @@
   ScriptInputs:
     "":
       stoveSet: !<reference.SceneObject> 08a902b8-bf50-4298-92ca-c0c1d9f62ef1
-      material: !<reference.Material> 70d03593-c7b4-410a-ae5c-75cb82ee32dc
+      material: !<reference.Material> eecc9b0c-617a-4c54-84db-0dd255618ab6
       widthCm: !<float> 30.000000
-      heightCm: 1.200000
-      depthCm: !<float> 3.000000
-      barColor: !<Vec4> {x: 0.550000, y: 0.720000, z: 0.920000, w: 1.000000}
-      hoverColor: !<Vec4> {x: 0.850000, y: 0.960000, z: 1.000000, w: 1.000000}
+      heightCm: !<float> 2.000000
+      depthCm: !<float> 2.000000
+      barColor: !<Vec4> {x: 0.450000, y: 0.520000, z: 0.620000, w: 1.000000}
+      hoverColor: !<Vec4> {x: 0.740000, y: 0.820000, z: 0.940000, w: 1.000000}
+      ridgeCount: !<float> 3.000000
+      ridgeSpacingCm: !<float> 2.000000
+      ridgeRadiusScale: 1.150000
+      ridgeWidthCm: 0.400000
+      segments: !<float> 12.000000
+      capRings: !<float> 6.000000
       colliderPaddingCm: 1.500000
       debugCollider: false
   ScriptTypes:
@@ -1401,9 +1458,13 @@
     layerWidthCm: true
     layerLengthCm: true
     layerThicknessCm: true
-    freshColor: true
-    setColor: true
-    logColor: true
+    freshRoughness: true
+    setRoughness: true
+    freshAlpha: true
+    logBands: true
+    bandWidthCm: true
+    bandTint: true
+    cutFaceTint: true
     logLengthCm: true
     logRadius1Cm: true
     logRadius2Cm: true
@@ -1411,6 +1472,7 @@
     panInnerLengthCm: true
     sliceCount: true
     sliceGapCm: true
+    layerRenderOrder: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
@@ -1419,12 +1481,21 @@
       logObject: !<reference.SceneObject> eedc7f48-4dc2-4a9a-beb4-e9435f0dc8e5
       slicesObject: !<reference.SceneObject> cb2e796b-c6c0-4935-aff0-697d7bf0420d
       material: !<reference.Material> 70d03593-c7b4-410a-ae5c-75cb82ee32dc
+      layerMaterial: !<reference.Material> 70987fda-f1c5-4071-92ef-97f949774ca1
+      logMaterial: !<reference.Material> 118333ee-e6e2-4b86-9556-085e9c77c5ec
       layerWidthCm: 12.400000
       layerLengthCm: 16.400000
       layerThicknessCm: 0.500000
-      freshColor: !<Vec4> {x: 1.000000, y: 0.800000, z: 0.120000, w: 1.000000}
-      setColor: !<Vec4> {x: 0.980000, y: 0.930000, z: 0.660000, w: 1.000000}
-      logColor: !<Vec4> {x: 0.980000, y: 0.860000, z: 0.360000, w: 1.000000}
+      freshColor: !<Vec4> {x: 1.000000, y: 0.780000, z: 0.120000, w: 1.000000}
+      setColor: !<Vec4> {x: 0.980000, y: 0.920000, z: 0.660000, w: 1.000000}
+      freshRoughness: 0.150000
+      setRoughness: 0.800000
+      freshAlpha: 0.900000
+      logColor: !<Vec4> {x: 0.930000, y: 0.720000, z: 0.220000, w: 1.000000}
+      logBands: !<float> 4.000000
+      bandWidthCm: 0.600000
+      bandTint: 0.900000
+      cutFaceTint: 1.080000
       logLengthCm: 11.500000
       logRadius1Cm: 1.300000
       logRadius2Cm: 1.900000
@@ -1432,6 +1503,7 @@
       panInnerLengthCm: !<float> 18.000000
       sliceCount: !<float> 6.000000
       sliceGapCm: 0.400000
+      layerRenderOrder: !<float> 1.000000
   ScriptTypes:
     "":
       {}
@@ -1550,11 +1622,27 @@
     nextSizeCm: true
     backSizeCm: true
     buttonGapCm: true
-    nextLabel: true
-    backLabel: true
-    demoLabel: true
+    cornerRadiusCm: true
+    borderCm: true
+    hoverScale: true
+    hoverSeconds: true
     labelSize: true
-    labelColor: true
+    nextLabelColor: true
+    nextColor: true
+    nextColorBottom: true
+    nextHoverColor: true
+    nextPressColor: true
+    nextBorderColor: true
+    backLabelSize: true
+    backLabelColor: true
+    backColor: true
+    backHoverColor: true
+    backBorderColor: true
+    demoLabel: true
+    demoLabelSize: true
+    demoLabelWidthCm: true
+    demoRowShiftCm: true
+    knobOnColor: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
@@ -1563,11 +1651,30 @@
       nextSizeCm: !<Vec2> {x: 8.000000, y: 6.000000}
       backSizeCm: !<Vec2> {x: 6.000000, y: 4.000000}
       buttonGapCm: 1.200000
-      nextLabel: Next
-      backLabel: Back
-      demoLabel: Demo ×10
+      cornerRadiusCm: 1.200000
+      borderCm: 0.150000
+      hoverScale: 1.050000
+      hoverSeconds: 0.120000
+      nextLabel: Next ›
       labelSize: !<float> 60.000000
-      labelColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+      nextLabelColor: !<Vec4> {x: 0.120000, y: 0.120000, z: 0.140000, w: 1.000000}
+      nextColor: !<Vec4> {x: 1.000000, y: 0.780000, z: 0.200000, w: 1.000000}
+      nextColorBottom: !<Vec4> {x: 0.980000, y: 0.720000, z: 0.160000, w: 1.000000}
+      nextHoverColor: !<Vec4> {x: 1.000000, y: 0.860000, z: 0.380000, w: 1.000000}
+      nextPressColor: !<Vec4> {x: 0.900000, y: 0.660000, z: 0.120000, w: 1.000000}
+      nextBorderColor: !<Vec4> {x: 1.000000, y: 0.950000, z: 0.800000, w: 1.000000}
+      backLabel: ‹ Back
+      backLabelSize: !<float> 56.000000
+      backLabelColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+      backColor: !<Vec4> {x: 0.160000, y: 0.170000, z: 0.190000, w: 1.000000}
+      backHoverColor: !<Vec4> {x: 0.260000, y: 0.270000, z: 0.300000, w: 1.000000}
+      backBorderColor: !<Vec4> {x: 0.780000, y: 0.780000, z: 0.800000, w: 1.000000}
+      demoLabel: Demo ×10
+      demoLabelSize: !<float> 44.000000
+      demoLabelWidthCm: 4.600000
+      demoRowShiftCm: !<float> 3.000000
+      demoLabelColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 1.000000, w: 0.920000}
+      knobOnColor: !<Vec4> {x: 1.000000, y: 0.780000, z: 0.200000, w: 1.000000}
   ScriptTypes:
     "":
       {}
@@ -1755,6 +1862,22 @@
     - !<own> dcc36a33-e23d-48f3-8e96-f9c9fd3cd030
   Components:
     []
+- !<ScriptComponent/83d3744f-77bd-42da-a4df-5713807bed9d>
+  PrefabRemaps:
+    []
+  Name: MessagingBridge
+  Enabled: true
+  ScriptAsset: !<reference> 9aa407db-2872-4afc-a162-cf7faf2a0f29
+  ScriptInputsDefault:
+    {}
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      {}
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/83ef588c-5040-4344-b15f-0554c739da0b>
   PrefabRemaps:
     []
@@ -1810,7 +1933,7 @@
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
-    Position: {x: 3.000000, y: 8.100000, z: -9.600000}
+    Position: {x: 3.000000, y: 9.600000, z: -9.600000}
     Rotation: {x: -33.000000, y: 0.000000, z: 0.000000}
     Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
     HasSegmentScaleCompensation: false
@@ -1943,12 +2066,19 @@
   ScriptInputsDefault:
     widthCm: true
     heightCm: true
-    titleSize: true
-    bodySize: true
+    cornerRadiusCm: true
+    plateColor: true
+    plateOpacity: true
+    borderCm: true
+    borderColor: true
+    accentColor: true
+    accentCm: true
+    tipSize: true
+    stepFormat: true
+    stepColor: true
     titleColor: true
     textColor: true
-    tipColor: true
-    plateStyle: true
+    sidePaddingCm: true
     animateSeconds: true
   ScriptTypesDefault:
     {}
@@ -1956,12 +2086,23 @@
     "":
       widthCm: !<float> 24.000000
       heightCm: !<float> 12.000000
-      titleSize: !<float> 64.000000
-      bodySize: !<float> 54.000000
+      cornerRadiusCm: 1.500000
+      plateColor: !<Vec4> {x: 0.080000, y: 0.090000, z: 0.110000, w: 1.000000}
+      plateOpacity: 0.700000
+      borderCm: 0.150000
+      borderColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 1.000000, w: 0.360000}
+      accentColor: !<Vec4> {x: 1.000000, y: 0.780000, z: 0.200000, w: 1.000000}
+      accentCm: 0.300000
+      titleSize: !<float> 56.000000
+      bodySize: !<float> 50.000000
+      tipSize: !<float> 44.000000
+      stepWidthCm: 4.400000
+      stepFormat: "Step {n} ·"
+      stepColor: !<Vec4> {x: 1.000000, y: 0.780000, z: 0.200000, w: 1.000000}
       titleColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
       textColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
-      tipColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 1.000000, w: 0.720000}
-      plateStyle: dark
+      tipColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 1.000000, w: 0.600000}
+      sidePaddingCm: 0.800000
       animateSeconds: 0.200000
   ScriptTypes:
     "":
@@ -2189,13 +2330,8 @@
   ScriptAsset: !<reference> 04f8f03d-376a-41eb-bc41-6fc54bbb0711
   ScriptInputsDefault:
     outerDiameterCm: true
-    bandCm: true
     thicknessCm: true
     segments: true
-    arcColor: true
-    trackColor: true
-    hoverColor: true
-    pausedColor: true
     pulseScale: true
     pulseSeconds: true
     colliderPaddingCm: true
@@ -2206,13 +2342,13 @@
     "":
       material: !<reference.Material> 70d03593-c7b4-410a-ae5c-75cb82ee32dc
       outerDiameterCm: !<float> 6.000000
-      bandCm: 0.800000
+      bandCm: 0.900000
       thicknessCm: 0.400000
       segments: !<float> 64.000000
-      arcColor: !<Vec4> {x: 0.350000, y: 0.850000, z: 1.000000, w: 1.000000}
-      trackColor: !<Vec4> {x: 0.300000, y: 0.330000, z: 0.380000, w: 1.000000}
-      hoverColor: !<Vec4> {x: 0.800000, y: 0.960000, z: 1.000000, w: 1.000000}
-      pausedColor: !<Vec4> {x: 1.000000, y: 0.720000, z: 0.250000, w: 1.000000}
+      arcColor: !<Vec4> {x: 1.000000, y: 0.780000, z: 0.200000, w: 1.000000}
+      trackColor: !<Vec4> {x: 0.320000, y: 0.320000, z: 0.320000, w: 1.000000}
+      hoverColor: !<Vec4> {x: 1.000000, y: 0.900000, z: 0.500000, w: 1.000000}
+      pausedColor: !<Vec4> {x: 1.000000, y: 0.620000, z: 0.200000, w: 1.000000}
       pulseScale: 1.250000
       pulseSeconds: 0.300000
       colliderPaddingCm: !<float> 1.000000
@@ -2235,6 +2371,21 @@
     []
   Components:
     - !<own> 11c4bb09-7c38-4023-9802-74f9f28709a9
+- !<SceneObject/aae69426-c121-45e1-8d4a-af105b46edcf>
+  PrefabRemaps:
+    []
+  Name: ContactShadows
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 2341bd26-0a9d-4eea-b6ff-3cb1da2bb8a6
 - !<SceneObject/abfa4c71-3560-46f0-9471-90e212f21185>
   PrefabRemaps:
     []
@@ -2524,7 +2675,7 @@
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
-    Position: {x: 3.000000, y: 12.800000, z: -15.000000}
+    Position: {x: 3.000000, y: 16.559999, z: -15.600000}
     Rotation: {x: -30.000000, y: 0.000000, z: 0.000000}
     Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
     HasSegmentScaleCompensation: false
@@ -2728,7 +2879,7 @@
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 0.600000, z: 16.000000}
+    Position: {x: 0.000000, y: 1.000000, z: 16.000000}
     Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
     Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
     HasSegmentScaleCompensation: false
@@ -2797,23 +2948,42 @@
     headLength: true
     headWidth: true
     shaftWidth: true
-    thickness: true
+    tailColor: true
+    headColor: true
     animate: true
     sweepDistance: true
     sweepSeconds: true
+    sweepCount: true
+    trailSeconds: true
+    ghostCount: true
+    baseAlpha: true
+    pulseAlphaMin: true
+    pulseScaleMax: true
+    pulseHz: true
+    drawOrder: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
     "":
-      material: !<reference.Material> 70d03593-c7b4-410a-ae5c-75cb82ee32dc
+      material: !<reference.Material> 4cbe2f15-68a6-4079-a973-d8bc78e06fe2
       arrowLength: !<float> 12.000000
       headLength: 4.500000
       headWidth: !<float> 7.000000
       shaftWidth: !<float> 3.000000
-      thickness: 0.300000
+      thickness: 0.800000
+      tailColor: !<Vec4> {x: 1.000000, y: 0.550000, z: 0.100000, w: 1.000000}
+      headColor: !<Vec4> {x: 1.000000, y: 0.920000, z: 0.350000, w: 1.000000}
       animate: true
       sweepDistance: !<float> 4.000000
       sweepSeconds: 1.200000
+      sweepCount: !<float> 3.000000
+      trailSeconds: 0.400000
+      ghostCount: !<float> 3.000000
+      baseAlpha: 0.700000
+      pulseAlphaMin: 0.550000
+      pulseScaleMax: 1.040000
+      pulseHz: 1.500000
+      drawOrder: !<float> 2.000000
   ScriptTypes:
     "":
       {}
@@ -2847,6 +3017,21 @@
     - !<own> 74d13517-1dbf-42e6-b536-27afc4909c65
   Components:
     []
+- !<SceneObject/d9f3c218-6bc2-4f09-8fef-db0920377b34>
+  PrefabRemaps:
+    []
+  Name: LEAF Plugin Bridge
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 83d3744f-77bd-42da-a4df-5713807bed9d
 - !<SceneObject/da214b27-43a7-4db4-90fd-993798e859d9>
   PrefabRemaps:
     []
@@ -2917,16 +3102,29 @@
     widthCm: true
     depthCm: true
     thicknessCm: true
-    color: true
+    chamferCm: true
+    noisePercent: true
+    gridX: true
+    gridZ: true
+    sideTint: true
+    bevelTint: true
+    bottomTint: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
     "":
-      material: !<reference.Material> 70d03593-c7b4-410a-ae5c-75cb82ee32dc
+      material: !<reference.Material> a3342332-dcfe-4780-bd21-1d6905195332
       widthCm: !<float> 50.000000
       depthCm: !<float> 35.000000
       thicknessCm: !<float> 2.000000
-      color: !<Vec4> {x: 0.800000, y: 0.770000, z: 0.720000, w: 1.000000}
+      color: !<Vec4> {x: 0.800000, y: 0.680000, z: 0.520000, w: 1.000000}
+      chamferCm: 0.500000
+      noisePercent: !<float> 4.000000
+      gridX: !<float> 10.000000
+      gridZ: !<float> 7.000000
+      sideTint: 0.860000
+      bevelTint: 0.930000
+      bottomTint: 0.800000
   ScriptTypes:
     "":
       {}

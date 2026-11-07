@@ -10,12 +10,15 @@ import { FlexAlign, FlexAlignSelf, FlexDirection, FlexJustify } from "Spectacles
  * Owns: SceneObjects RingStepNumberText / RingTimeText / RingPauseGlyph / RingTitleText.
  * Expects: to sit on the "RingText" child of TimerRing (same plane, slightly in front).
  * Must not: count time or decide pause - TamagoCoachMain pushes values through the setters.
+ *
+ * Visibility: setCenterVisible(v) / setTitleVisible(v) enable or disable the named text
+ * SceneObjects themselves (their .text keeps its value, so tests can still read it). The layout
+ * items are registered explicitly rather than auto-discovered, so a text that is hidden before
+ * OnStart (Prep hides the centre) is still laid out and reappears in place.
  */
-type TextWithWeight = Text & { weight?: number };
-
 function styleText(t: Text, size: number, weight: number, color: vec4): void {
   t.size = size;
-  (t as TextWithWeight).weight = weight;
+  t.weight = weight;
   t.textFill.color = color;
   t.depthTest = true;
   t.horizontalAlignment = HorizontalAlignment.Center;
@@ -44,6 +47,11 @@ export class TamagoCoachRingUI extends BaseScriptComponent {
   @hint("Step number / pause glyph text size")
   @widget(new SliderWidget(40, 140, 1))
   numberSize: number = 84;
+
+  @input
+  @hint("Step number font weight (800 = extra bold; the font falls back to its heaviest weight if 800 is missing)")
+  @widget(new SliderWidget(100, 900, 100))
+  numberWeight: number = 800;
 
   @input
   @hint("Remaining-time and title text size (54 keeps cap height >= 0.8 cm)")
@@ -78,6 +86,9 @@ export class TamagoCoachRingUI extends BaseScriptComponent {
   private numberText: Text | null = null;
   private timeText: Text | null = null;
   private titleText: Text | null = null;
+  private numberObject: SceneObject | null = null;
+  private timeObject: SceneObject | null = null;
+  private titleObject: SceneObject | null = null;
   private glyphObject: SceneObject | null = null;
   private stepNumber = 1;
   private paused = false;
@@ -89,6 +100,7 @@ export class TamagoCoachRingUI extends BaseScriptComponent {
     const center = global.scene.createSceneObject("RingCenter");
     center.setParent(this.sceneObject);
     const col = center.createComponent(FlexLayout.getTypeName()) as FlexLayout;
+    col.autoDiscoverItemsOnStart = false; // registered below, so hidden rows are still laid out
     col.width = this.centerSizeCm;
     col.height = this.centerSizeCm;
     col.direction = FlexDirection.Column;
@@ -96,9 +108,13 @@ export class TamagoCoachRingUI extends BaseScriptComponent {
     col.justifyContent = FlexJustify.Center;
     col.rowGap = 0.1;
 
-    const numberRow = this.addRow(center, "RingStepNumberText", this.numberSize, 700, this.numberColor, 2.2);
+    const numberRow = this.addRow(center, "RingStepNumberText", this.numberSize, this.numberWeight, this.numberColor, 2.2);
+    const timeRow = this.addRow(center, "RingTimeText", this.smallSize, 500, this.timeColor, 1.5);
+    col.addItems([numberRow.item, timeRow.item]);
+    this.numberObject = numberRow.object;
     this.numberText = numberRow.text;
-    this.timeText = this.addRow(center, "RingTimeText", this.smallSize, 500, this.timeColor, 1.5).text;
+    this.timeObject = timeRow.object;
+    this.timeText = timeRow.text;
 
     // Pause glyph rides on the number row (a child, so it follows the laid-out position).
     this.glyphObject = global.scene.createSceneObject("RingPauseGlyph");
@@ -110,17 +126,21 @@ export class TamagoCoachRingUI extends BaseScriptComponent {
     glyph.layoutRect = Rect.create(-1.5, 1.5, -1.1, 1.1);
     this.glyphObject.enabled = false;
 
-    // Title group under the ring.
+    // Title group under the ring (shown only while the card is collapsed).
     const titleGroup = global.scene.createSceneObject("RingTitleGroup");
     titleGroup.setParent(this.sceneObject);
     titleGroup.getTransform().setLocalPosition(new vec3(0, -this.titleOffsetCm, 0));
     const titleCol = titleGroup.createComponent(FlexLayout.getTypeName()) as FlexLayout;
+    titleCol.autoDiscoverItemsOnStart = false;
     titleCol.width = 16;
     titleCol.height = 1.8;
     titleCol.direction = FlexDirection.Column;
     titleCol.alignItems = FlexAlign.Stretch;
     titleCol.justifyContent = FlexJustify.Center;
-    this.titleText = this.addRow(titleGroup, "RingTitleText", this.smallSize, 700, this.titleColor, 1.6).text;
+    const titleRow = this.addRow(titleGroup, "RingTitleText", this.smallSize, 700, this.titleColor, 1.6);
+    titleCol.addItems([titleRow.item]);
+    this.titleObject = titleRow.object;
+    this.titleText = titleRow.text;
   }
 
   /** 1-based step number shown in the middle of the ring. */
@@ -138,6 +158,17 @@ export class TamagoCoachRingUI extends BaseScriptComponent {
     if (this.titleText) this.titleText.text = text;
   }
 
+  /** Show or hide the title line under the ring (the RingTitleText object; its text is kept). */
+  setTitleVisible(visible: boolean): void {
+    if (this.titleObject && this.titleObject.enabled !== visible) this.titleObject.enabled = visible;
+  }
+
+  /** Show or hide the step number and time in the ring centre (the objects; their text is kept). */
+  setCenterVisible(visible: boolean): void {
+    if (this.numberObject && this.numberObject.enabled !== visible) this.numberObject.enabled = visible;
+    if (this.timeObject && this.timeObject.enabled !== visible) this.timeObject.enabled = visible;
+  }
+
   /** Show the pause glyph instead of the step number. */
   setPaused(paused: boolean): void {
     this.paused = paused;
@@ -145,16 +176,23 @@ export class TamagoCoachRingUI extends BaseScriptComponent {
     if (this.numberText) this.numberText.text = paused ? "" : String(this.stepNumber);
   }
 
-  private addRow(parent: SceneObject, name: string, size: number, weight: number, color: vec4, height: number): { object: SceneObject; text: Text } {
+  private addRow(
+    parent: SceneObject,
+    name: string,
+    size: number,
+    weight: number,
+    color: vec4,
+    height: number,
+  ): { object: SceneObject; text: Text; item: FlexItem } {
     const so = global.scene.createSceneObject(name);
     so.setParent(parent);
     const t = so.createComponent("Component.Text") as Text;
     t.text = "";
     styleText(t, size, weight, color);
-    t.layoutRect = Rect.create(-0.5, 0.5, -0.5, 0.5);
+    t.layoutRect = Rect.create(-0.5, 0.5, -0.5, 0.5); // the layout rewrites this to the allocated cell
     const item = so.createComponent(FlexItem.getTypeName()) as FlexItem;
     item.alignSelf = FlexAlignSelf.Stretch;
     item.overrideHeight = height;
-    return { object: so, text: t };
+    return { object: so, text: t, item };
   }
 }

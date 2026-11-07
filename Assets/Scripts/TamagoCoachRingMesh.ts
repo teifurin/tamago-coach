@@ -35,7 +35,7 @@ export class TamagoCoachRingMesh extends BaseScriptComponent {
   @input
   @hint("Radial width of the band, cm")
   @widget(new SliderWidget(0.2, 3, 0.1))
-  bandCm: number = 0.8;
+  bandCm: number = 0.9;
 
   @input
   @hint("Ring thickness along its normal, cm")
@@ -47,22 +47,22 @@ export class TamagoCoachRingMesh extends BaseScriptComponent {
   @widget(new SliderWidget(16, 128, 1))
   segments: number = 64;
 
-  @input("vec4", "{0.35,0.85,1.0,1}")
-  @hint("Colour of the remaining-time arc")
+  @input("vec4", "{1.0,0.78,0.2,1}")
+  @hint("Colour of the remaining-time arc (yolk)")
   @widget(new ColorWidget())
   arcColor: vec4;
 
-  @input("vec4", "{0.30,0.33,0.38,1}")
-  @hint("Colour of the dim full-circle track")
+  @input("vec4", "{0.32,0.32,0.32,1}")
+  @hint("Colour of the elapsed full-circle track (30 % white reads as faint white on the additive display)")
   @widget(new ColorWidget())
   trackColor: vec4;
 
-  @input("vec4", "{0.80,0.96,1.0,1}")
+  @input("vec4", "{1.0,0.9,0.5,1}")
   @hint("Arc colour while a hand/cursor aims at the ring")
   @widget(new ColorWidget())
   hoverColor: vec4;
 
-  @input("vec4", "{1.0,0.72,0.25,1}")
+  @input("vec4", "{1.0,0.62,0.2,1}")
   @hint("Arc colour while the countdown is paused")
   @widget(new ColorWidget())
   pausedColor: vec4;

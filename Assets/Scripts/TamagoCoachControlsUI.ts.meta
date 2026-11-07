@@ -28,14 +28,33 @@
   ExportUid: 00000000-0000-0000-0000-000000000000
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
+    backBorderColor: false
+    backColor: false
+    backHoverColor: false
     backLabel: false
+    backLabelColor: false
+    backLabelSize: false
     backSizeCm: false
+    borderCm: false
     buttonGapCm: false
+    cornerRadiusCm: false
     demoLabel: false
+    demoLabelColor: false
+    demoLabelSize: false
+    demoLabelWidthCm: false
+    demoRowShiftCm: false
     demoSwitchAnchor: false
-    labelColor: false
+    hoverScale: false
+    hoverSeconds: false
+    knobOnColor: false
     labelSize: false
+    nextBorderColor: false
+    nextColor: false
+    nextColorBottom: false
+    nextHoverColor: false
     nextLabel: false
+    nextLabelColor: false
+    nextPressColor: false
     nextSizeCm: false
   ScriptTypesHidden:
     {}
@@ -50,11 +69,30 @@
       nextSizeCm: !<Vec2> {x: 8.000000, y: 6.000000}
       backSizeCm: !<Vec2> {x: 6.000000, y: 4.000000}
       buttonGapCm: 1.200000
+      cornerRadiusCm: 1.200000
+      borderCm: 0.150000
+      hoverScale: 1.050000
+      hoverSeconds: 0.120000
       nextLabel: Next
-      backLabel: Back
-      demoLabel: Demo ×10
       labelSize: !<float> 60.000000
-      labelColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+      nextLabelColor: !<Vec4> {x: 0.120000, y: 0.120000, z: 0.140000, w: 1.000000}
+      nextColor: !<Vec4> {x: 1.000000, y: 0.780000, z: 0.200000, w: 1.000000}
+      nextColorBottom: !<Vec4> {x: 0.980000, y: 0.720000, z: 0.160000, w: 1.000000}
+      nextHoverColor: !<Vec4> {x: 1.000000, y: 0.860000, z: 0.380000, w: 1.000000}
+      nextPressColor: !<Vec4> {x: 0.900000, y: 0.660000, z: 0.120000, w: 1.000000}
+      nextBorderColor: !<Vec4> {x: 1.000000, y: 0.950000, z: 0.800000, w: 1.000000}
+      backLabel: Back
+      backLabelSize: !<float> 56.000000
+      backLabelColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+      backColor: !<Vec4> {x: 0.160000, y: 0.170000, z: 0.190000, w: 1.000000}
+      backHoverColor: !<Vec4> {x: 0.260000, y: 0.270000, z: 0.300000, w: 1.000000}
+      backBorderColor: !<Vec4> {x: 0.780000, y: 0.780000, z: 0.800000, w: 1.000000}
+      demoLabel: Demo ×10
+      demoLabelSize: !<float> 44.000000
+      demoLabelWidthCm: 4.600000
+      demoRowShiftCm: !<float> 3.000000
+      demoLabelColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 1.000000, w: 0.700000}
+      knobOnColor: !<Vec4> {x: 1.000000, y: 0.780000, z: 0.200000, w: 1.000000}
   ScriptTypes:
     -
       {}
@@ -63,17 +101,48 @@
     - '// @ui {"widget":"separator"}'
     - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">References</span>"}'
     - '// @ui {"widget":"group_start", "label":"References"}'
-    - '// @input SceneObject demoSwitchAnchor {"hint":"Authored anchor at the far-left corner of the counter for the Demo x10 switch row"}'
+    - '// @input SceneObject demoSwitchAnchor {"hint":"Authored anchor at the far-left corner of the counter for the Demo x10 row"}'
     - '// @ui {"widget":"group_end"}'
     - '// @ui {"widget":"separator"}'
-    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">Settings</span>"}'
-    - '// @ui {"widget":"group_start", "label":"Settings"}'
-    - '// @input vec2 nextSizeCm = "{8,6}" {"hint":"Next button size, cm (width, height)"}'
-    - '// @input vec2 backSizeCm = "{6,4}" {"hint":"Back button size, cm (width, height)"}'
-    - '// @input float buttonGapCm = 1.2 {"hint":"Gap between the Next and Back buttons, cm", "widget":"slider", "min":0, "max":5, "step":0.1}'
-    - '// @input string nextLabel = "Next" {"hint":"Label on the Next button"}'
-    - '// @input string backLabel = "Back" {"hint":"Label on the Back button"}'
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">Layout</span>"}'
+    - '// @ui {"widget":"group_start", "label":"Layout"}'
+    - '// @input vec2 nextSizeCm = "{8,6}" {"hint":"Next button size, cm (width, height) - tc-06 contract"}'
+    - '// @input vec2 backSizeCm = "{6,4}" {"hint":"Back button size, cm (width, height) - tc-06 contract"}'
+    - '// @input float buttonGapCm = 1.2 {"hint":"Gap between the Next and Back buttons, cm - tc-06 contract", "widget":"slider", "min":0, "max":5, "step":0.1}'
+    - '// @input float cornerRadiusCm = 1.2 {"hint":"Corner radius of both buttons, cm", "widget":"slider", "min":0, "max":3, "step":0.1}'
+    - '// @input float borderCm = 0.15 {"hint":"Border thickness of both buttons, cm", "widget":"slider", "min":0, "max":0.5, "step":0.01}'
+    - '// @input float hoverScale = 1.05 {"hint":"Button scale while hovered (1 = no scale change)", "widget":"slider", "min":1, "max":1.3, "step":0.01}'
+    - '// @input float hoverSeconds = 0.12 {"hint":"Hover scale tween length, seconds (ease-out)", "widget":"slider", "min":0, "max":0.5, "step":0.01}'
+    - '// @ui {"widget":"group_end"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">Next button</span>"}'
+    - '// @ui {"widget":"group_start", "label":"Next"}'
+    - '// @input string nextLabel = "Next ›" {"hint":"Label on the Next button"}'
+    - '// @input float labelSize = 60 {"hint":"Next label text size (em-square; 60 ~ 1 cm cap height)", "widget":"slider", "min":40, "max":100, "step":1}'
+    - '// @input vec4 nextLabelColor = "{0.12,0.12,0.14,1}" {"hint":"Next label colour (dark on yolk)", "widget":"color"}'
+    - '// @input vec4 nextColor = "{1,0.78,0.2,1}" {"hint":"Next plate colour, top gradient stop (yolk)", "widget":"color"}'
+    - '// @input vec4 nextColorBottom = "{0.98,0.72,0.16,1}" {"hint":"Next plate colour, bottom gradient stop", "widget":"color"}'
+    - '// @input vec4 nextHoverColor = "{1,0.86,0.38,1}" {"hint":"Next plate colour while hovered (the glow)", "widget":"color"}'
+    - '// @input vec4 nextPressColor = "{0.9,0.66,0.12,1}" {"hint":"Next plate colour while pinched", "widget":"color"}'
+    - '// @input vec4 nextBorderColor = "{1,0.95,0.8,1}" {"hint":"Next border colour", "widget":"color"}'
+    - '// @ui {"widget":"group_end"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">Back button</span>"}'
+    - '// @ui {"widget":"group_start", "label":"Back"}'
+    - '// @input string backLabel = "‹ Back" {"hint":"Label on the Back button"}'
+    - '// @input float backLabelSize = 56 {"hint":"Back label text size", "widget":"slider", "min":40, "max":100, "step":1}'
+    - '// @input vec4 backLabelColor = "{1,1,1,1}" {"hint":"Back label colour", "widget":"color"}'
+    - '// @input vec4 backColor = "{0.16,0.17,0.19,1}" {"hint":"Back plate colour (dark, opaque)", "widget":"color"}'
+    - '// @input vec4 backHoverColor = "{0.26,0.27,0.30,1}" {"hint":"Back plate colour while hovered", "widget":"color"}'
+    - '// @input vec4 backBorderColor = "{0.78,0.78,0.80,1}" {"hint":"Back border colour", "widget":"color"}'
+    - '// @ui {"widget":"group_end"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">Demo x10 row</span>"}'
+    - '// @ui {"widget":"group_start", "label":"Demo"}'
     - '// @input string demoLabel = "Demo ×10" {"hint":"Label next to the demo-speed switch"}'
-    - '// @input float labelSize = 60 {"hint":"Button label text size (em-square; 60 ~ 1 cm cap height)", "widget":"slider", "min":40, "max":100, "step":1}'
-    - '// @input vec4 labelColor = "{1,1,1,1}" {"hint":"Label colour", "widget":"color"}'
+    - '// @input float demoLabelSize = 44 {"hint":"Demo label text size", "widget":"slider", "min":30, "max":100, "step":1}'
+    - '// @input float demoLabelWidthCm = 4.6 {"hint":"Width reserved for the demo label, cm (the switch follows after the gap)", "widget":"slider", "min":2, "max":10, "step":0.1}'
+    - '// @input float demoRowShiftCm = 3 {"hint":"Sideways shift of the demo row from the anchor, cm (+ = toward the counter centre, so the label stays on the counter)", "widget":"slider", "min":-10, "max":10, "step":0.5}'
+    - '// @input vec4 demoLabelColor = "{1,1,1,0.7}" {"hint":"Demo label colour", "widget":"color"}'
+    - '// @input vec4 knobOnColor = "{1,0.78,0.2,1}" {"hint":"Switch knob colour while Demo x10 is on (yolk)", "widget":"color"}'
     - '// @ui {"widget":"group_end"}'

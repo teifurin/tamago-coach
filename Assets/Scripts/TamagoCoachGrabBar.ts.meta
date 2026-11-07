@@ -29,12 +29,18 @@
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
     barColor: false
+    capRings: false
     colliderPaddingCm: false
     debugCollider: false
     depthCm: false
     heightCm: false
     hoverColor: false
     material: false
+    ridgeCount: false
+    ridgeRadiusScale: false
+    ridgeSpacingCm: false
+    ridgeWidthCm: false
+    segments: false
     stoveSet: false
     widthCm: false
   ScriptTypesHidden:
@@ -53,6 +59,12 @@
       depthCm: !<float> 3.000000
       barColor: !<Vec4> {x: 0.550000, y: 0.720000, z: 0.920000, w: 1.000000}
       hoverColor: !<Vec4> {x: 0.850000, y: 0.960000, z: 1.000000, w: 1.000000}
+      ridgeCount: !<float> 3.000000
+      ridgeSpacingCm: !<float> 2.000000
+      ridgeRadiusScale: 1.150000
+      ridgeWidthCm: 0.400000
+      segments: !<float> 12.000000
+      capRings: !<float> 6.000000
       colliderPaddingCm: 1.500000
       debugCollider: false
   ScriptTypes:
@@ -64,16 +76,22 @@
     - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">References</span>"}'
     - '// @ui {"widget":"group_start", "label":"References"}'
     - '// @input SceneObject stoveSet {"hint":"Root SceneObject moved by the grab (the StoveSet)"}'
-    - '// @input Asset.Material material {"hint":"Unlit vertex-colour material (vertexBaseColorMaterial)"}'
+    - '// @input Asset.Material material {"hint":"Lit vertex-colour PBR material (GrabBarPBR: metallic 0.1 / roughness 0.5)"}'
     - '// @ui {"widget":"group_end"}'
     - '// @ui {"widget":"separator"}'
     - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">Settings</span>"}'
     - '// @ui {"widget":"group_start", "label":"Settings"}'
-    - '// @input float widthCm = 30 {"hint":"Bar width along X, cm", "widget":"slider", "min":10, "max":60, "step":1}'
-    - '// @input float heightCm = 1.2 {"hint":"Bar height along Y, cm", "widget":"slider", "min":0.5, "max":5, "step":0.1}'
-    - '// @input float depthCm = 3 {"hint":"Bar depth along Z, cm", "widget":"slider", "min":1, "max":10, "step":0.5}'
-    - '// @input vec4 barColor = "{0.55,0.72,0.92,1}" {"hint":"Bar colour at rest", "widget":"color"}'
-    - '// @input vec4 hoverColor = "{0.85,0.96,1.0,1}" {"hint":"Bar colour while a hand/cursor aims at it", "widget":"color"}'
+    - '// @input float widthCm = 30 {"hint":"Bar length along X, cm (capsule end to end)", "widget":"slider", "min":10, "max":60, "step":1}'
+    - '// @input float heightCm = 2 {"hint":"Bar height along Y, cm (= capsule diameter)", "widget":"slider", "min":0.5, "max":5, "step":0.1}'
+    - '// @input float depthCm = 2 {"hint":"Collider depth along Z, cm (the capsule itself is heightCm deep)", "widget":"slider", "min":1, "max":10, "step":0.5}'
+    - '// @input vec4 barColor = "{0.45,0.52,0.62,1}" {"hint":"Bar colour at rest (low-saturation grey-blue)", "widget":"color"}'
+    - '// @input vec4 hoverColor = "{0.74,0.82,0.94,1}" {"hint":"Bar colour while a hand/cursor aims at it", "widget":"color"}'
+    - '// @input float ridgeCount = 3 {"hint":"Number of raised grip ridges in the middle", "widget":"slider", "min":0, "max":7, "step":1}'
+    - '// @input float ridgeSpacingCm = 2 {"hint":"Spacing between grip ridges along X, cm", "widget":"slider", "min":0.5, "max":6, "step":0.1}'
+    - '// @input float ridgeRadiusScale = 1.15 {"hint":"Ridge radius relative to the capsule radius", "widget":"slider", "min":1, "max":1.5, "step":0.01}'
+    - '// @input float ridgeWidthCm = 0.4 {"hint":"Ridge width along X, cm", "widget":"slider", "min":0.1, "max":2, "step":0.1}'
+    - '// @input float segments = 12 {"hint":"Segments around the capsule", "widget":"slider", "min":6, "max":32, "step":1}'
+    - '// @input float capRings = 6 {"hint":"Rings per hemispherical end cap", "widget":"slider", "min":2, "max":12, "step":1}'
     - '// @input float colliderPaddingCm = 1.5 {"hint":"Extra collider size around the bar so it is easy to grab, cm", "widget":"slider", "min":0, "max":6, "step":0.5}'
     - '// @input bool debugCollider {"hint":"Draw the collider as a wireframe for hit-zone diagnosis"}'
     - '// @ui {"widget":"group_end"}'

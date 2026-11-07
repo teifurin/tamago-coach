@@ -28,16 +28,27 @@
   ExportUid: 00000000-0000-0000-0000-000000000000
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
+    bodyColor: false
+    cornerRadius: false
+    cornerSegments: false
     depth: false
     floorThickness: false
+    handleCornerRadius: false
     handleLength: false
+    handleMetalColor: false
+    handleMetalLength: false
     handleThickness: false
+    handleTiltDeg: false
     handleWidth: false
+    handleWoodColor: false
+    handleWoodMaterial: false
     innerLength: false
+    innerWallTint: false
     innerWidth: false
     material: false
+    rimColor: false
     rimHeight: false
-    rimOverhang: false
+    rimMaterial: false
     wallThickness: false
   ScriptTypesHidden:
     {}
@@ -49,28 +60,59 @@
     []
   DefaultScriptInputs:
     - material: !<reference.Material> 00000000-0000-0000-0000-000000000000
+      rimMaterial: !<reference.Material> 00000000-0000-0000-0000-000000000000
+      handleWoodMaterial: !<reference.Material> 00000000-0000-0000-0000-000000000000
       innerWidth: !<float> 13.000000
       innerLength: !<float> 18.000000
       depth: !<float> 3.000000
       wallThickness: 0.800000
       floorThickness: 0.600000
       rimHeight: 0.500000
-      rimOverhang: 0.300000
+      cornerRadius: 1.500000
+      cornerSegments: !<float> 8.000000
       handleLength: !<float> 12.000000
+      handleMetalLength: !<float> 5.000000
       handleWidth: 2.500000
       handleThickness: 1.500000
+      handleCornerRadius: 0.600000
+      handleTiltDeg: !<float> 8.000000
+      bodyColor: !<Vec4> {x: 0.360000, y: 0.370000, z: 0.400000, w: 1.000000}
+      rimColor: !<Vec4> {x: 0.880000, y: 0.890000, z: 0.920000, w: 1.000000}
+      handleMetalColor: !<Vec4> {x: 0.420000, y: 0.420000, z: 0.450000, w: 1.000000}
+      handleWoodColor: !<Vec4> {x: 0.550000, y: 0.380000, z: 0.220000, w: 1.000000}
+      innerWallTint: 1.080000
   ScriptTypes:
     -
       {}
   InputLines:
-    - // @input Asset.Material material
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">TamagoPanMesh – body, lip and handle</span>"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">References</span>"}'
+    - '// @ui {"widget":"group_start", "label":"References"}'
+    - '// @input Asset.Material material {"hint":"Body material (PanBodyPBR: graphite, metallic 0.85 / roughness 0.45); also used for the metal handle grip"}'
+    - '// @input Asset.Material rimMaterial {"hint":"Lip material (PanRimPBR: metallic 1.0 / roughness 0.22); falls back to the body material"}'
+    - '// @input Asset.Material handleWoodMaterial {"hint":"Handle wood material (HandleWoodPBR: metallic 0 / roughness 0.6); falls back to the body material"}'
+    - '// @ui {"widget":"group_end"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">Settings</span>"}'
+    - '// @ui {"widget":"group_start", "label":"Settings"}'
     - // @input float innerWidth = 13
     - // @input float innerLength = 18
     - // @input float depth = 3
-    - // @input float wallThickness = 0.8
+    - // @input float wallThickness = 0.6
     - // @input float floorThickness = 0.6
-    - // @input float rimHeight = 0.5
-    - // @input float rimOverhang = 0.3
+    - '// @input float rimHeight = 0.5 {"hint":"Height of the lip band at the top of the wall, cm"}'
+    - '// @input float cornerRadius = 1.5 {"hint":"Radius of the four inner cavity corners, cm"}'
+    - '// @input float cornerSegments = 8 {"hint":"Arc segments per rounded corner"}'
     - // @input float handleLength = 12
+    - '// @input float handleMetalLength = 5 {"hint":"Length of the dark-metal front part of the handle, cm (the rest is wood)"}'
     - // @input float handleWidth = 2.5
     - // @input float handleThickness = 1.5
+    - '// @input float handleCornerRadius = 0.6 {"hint":"Handle corner rounding, cm (capsule-like bar)"}'
+    - "// @input float handleTiltDeg = 8 {\"hint\":\"Handle tilt about the pan's Z axis, degrees (far end rises)\"}"
+    - '// @input vec4 bodyColor = "{0.36,0.37,0.40,1}" {"hint":"Body colour: graphite (never black on the additive display)", "widget":"color"}'
+    - '// @input vec4 rimColor = "{0.88,0.89,0.92,1}" {"hint":"Lip colour: bright silver", "widget":"color"}'
+    - '// @input vec4 handleMetalColor = "{0.42,0.42,0.45,1}" {"hint":"Handle grip colour: dark metal", "widget":"color"}'
+    - '// @input vec4 handleWoodColor = "{0.55,0.38,0.22,1}" {"hint":"Handle wood colour", "widget":"color"}'
+    - '// @input float innerWallTint = 1.08 {"hint":"Vertex tint of the inner walls relative to the outer walls (1.0)", "widget":"slider", "min":0.8, "max":1.3, "step":0.01}'
+    - '// @ui {"widget":"group_end"}'

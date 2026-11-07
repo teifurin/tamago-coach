@@ -299,6 +299,7 @@ export class TamagoCoachMain extends BaseScriptComponent {
       this.egg.setReadiness(0);
     }
     if (this.cardUI) {
+      this.cardUI.setStepNumber(index + 1);
       this.cardUI.setContent(step.title, step.instruction, step.tip);
       this.cardUI.expand();
     }
@@ -306,6 +307,8 @@ export class TamagoCoachMain extends BaseScriptComponent {
       this.ringUI.setPaused(false);
       this.ringUI.setStepNumber(index + 1);
       this.ringUI.setTitle(step.title);
+      this.ringUI.setTitleVisible(false); // view only: the expanded card already shows the title
+      this.ringUI.setCenterVisible(step.seconds > 0); // view only: no lonely number without a countdown
     }
     if (this.ringMesh) this.ringMesh.setPaused(false);
 
@@ -346,7 +349,10 @@ export class TamagoCoachMain extends BaseScriptComponent {
 
     if (this.collapseCountdown >= 0) {
       this.collapseCountdown -= dt;
-      if (this.collapseCountdown < 0 && this.cardUI) this.cardUI.collapse();
+      if (this.collapseCountdown < 0) {
+        if (this.cardUI) this.cardUI.collapse();
+        if (this.ringUI) this.ringUI.setTitleVisible(true); // view only: card collapsed, ring shows the title
+      }
     }
 
     const step = STEPS[this.stepIndex];
@@ -375,6 +381,7 @@ export class TamagoCoachMain extends BaseScriptComponent {
       this.cardUI.setTip(step.zeroTip);
       this.cardUI.expand();
     }
+    if (this.ringUI) this.ringUI.setTitleVisible(false); // view only: the card is expanded again
     if (step.isLayer) {
       this.rollCue = true;
       if (this.rollArrow) this.rollArrow.enabled = true;

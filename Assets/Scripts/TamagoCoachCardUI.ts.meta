@@ -28,12 +28,23 @@
   ExportUid: 00000000-0000-0000-0000-000000000000
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
+    accentCm: false
+    accentColor: false
     animateSeconds: false
     bodySize: false
+    borderCm: false
+    borderColor: false
+    cornerRadiusCm: false
     heightCm: false
-    plateStyle: false
+    plateColor: false
+    plateOpacity: false
+    sidePaddingCm: false
+    stepColor: false
+    stepFormat: false
+    stepWidthCm: false
     textColor: false
     tipColor: false
+    tipSize: false
     titleColor: false
     titleSize: false
     widthCm: false
@@ -48,28 +59,54 @@
   DefaultScriptInputs:
     - widthCm: !<float> 24.000000
       heightCm: !<float> 12.000000
+      cornerRadiusCm: 1.500000
+      plateColor: !<Vec4> {x: 0.080000, y: 0.090000, z: 0.110000, w: 1.000000}
+      plateOpacity: 0.700000
+      borderCm: 0.150000
+      borderColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 1.000000, w: 0.360000}
+      accentColor: !<Vec4> {x: 1.000000, y: 0.780000, z: 0.200000, w: 1.000000}
+      accentCm: 0.300000
       titleSize: !<float> 64.000000
       bodySize: !<float> 54.000000
+      tipSize: !<float> 44.000000
+      stepWidthCm: !<float> 5.000000
+      stepFormat: "Step {n} ·"
+      stepColor: !<Vec4> {x: 1.000000, y: 0.780000, z: 0.200000, w: 1.000000}
       titleColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
       textColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
       tipColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 1.000000, w: 0.720000}
-      plateStyle: dark
+      sidePaddingCm: 0.800000
       animateSeconds: 0.200000
   ScriptTypes:
     -
       {}
   InputLines:
-    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">TamagoCoachCardUI – step card (title, instruction, tip)</span>"}'
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">TamagoCoachCardUI – step card (step · title, instruction, tip)</span>"}'
     - '// @ui {"widget":"separator"}'
-    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">Settings</span>"}'
-    - '// @ui {"widget":"group_start", "label":"Settings"}'
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">Plate</span>"}'
+    - '// @ui {"widget":"group_start", "label":"Plate"}'
     - '// @input float widthCm = 24 {"hint":"Card width, cm", "widget":"slider", "min":10, "max":40, "step":0.5}'
     - '// @input float heightCm = 12 {"hint":"Card height, cm", "widget":"slider", "min":6, "max":30, "step":0.5}'
-    - '// @input float titleSize = 64 {"hint":"Title text size (em-square, 43.886 = 1 cm)", "widget":"slider", "min":40, "max":120, "step":1}'
-    - '// @input float bodySize = 54 {"hint":"Instruction and tip text size (54 keeps cap height >= 0.8 cm)", "widget":"slider", "min":40, "max":100, "step":1}'
+    - '// @input float cornerRadiusCm = 1.5 {"hint":"Corner radius of the plate, cm", "widget":"slider", "min":0, "max":4, "step":0.1}'
+    - '// @input vec4 plateColor = "{0.08,0.09,0.11,1}" {"hint":"Plate colour (dark; the additive display renders dark colours as nearly transparent)", "widget":"color"}'
+    - '// @input float plateOpacity = 0.7 {"hint":"Plate opacity (blend mode Normal)", "widget":"slider", "min":0, "max":1, "step":0.05}'
+    - '// @input float borderCm = 0.15 {"hint":"Inset border thickness, cm (0 = no border)", "widget":"slider", "min":0, "max":0.5, "step":0.01}'
+    - '// @input vec4 borderColor = "{1,1,1,0.36}" {"hint":"Border colour; its alpha is multiplied by the plate opacity (0.36 x 0.7 = 25 % white)", "widget":"color"}'
+    - '// @input vec4 accentColor = "{1,0.78,0.2,1}" {"hint":"Yolk accent line along the top edge", "widget":"color"}'
+    - '// @input float accentCm = 0.3 {"hint":"Accent line thickness, cm", "widget":"slider", "min":0.1, "max":1, "step":0.05}'
+    - '// @ui {"widget":"group_end"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">Text</span>"}'
+    - '// @ui {"widget":"group_start", "label":"Text"}'
+    - '// @input float titleSize = 56 {"hint":"Header row text size (step prefix and title; em-square, 43.886 = 1 cm)", "widget":"slider", "min":40, "max":120, "step":1}'
+    - '// @input float bodySize = 50 {"hint":"Instruction text size", "widget":"slider", "min":40, "max":100, "step":1}'
+    - '// @input float tipSize = 44 {"hint":"Tip text size", "widget":"slider", "min":30, "max":100, "step":1}'
+    - '// @input float stepWidthCm = 4.4 {"hint":"Width reserved for the step prefix in the header row, cm (left-aligned; the title follows after the gap)", "widget":"slider", "min":3, "max":10, "step":0.1}'
+    - '// @input string stepFormat = "Step {n} ·" {"hint":"Format of the step prefix; {n} is the 1-based step number"}'
+    - '// @input vec4 stepColor = "{1,0.78,0.2,1}" {"hint":"Step prefix colour (yolk)", "widget":"color"}'
     - '// @input vec4 titleColor = "{1,1,1,1}" {"hint":"Title colour", "widget":"color"}'
     - '// @input vec4 textColor = "{1,1,1,1}" {"hint":"Instruction colour", "widget":"color"}'
-    - '// @input vec4 tipColor = "{1,1,1,0.72}" {"hint":"Tip colour (dimmer secondary text)", "widget":"color"}'
-    - '// @input string plateStyle = "dark" {"hint":"UIKit BackPlate style", "widget":"combobox", "values":[{"label":"dark", "value":"dark"}, {"label":"default", "value":"default"}, {"label":"simple", "value":"simple"}]}'
+    - '// @input vec4 tipColor = "{1,1,1,0.6}" {"hint":"Tip colour (dimmer secondary text)", "widget":"color"}'
+    - '// @input float sidePaddingCm = 0.8 {"hint":"Side padding of the text column, cm", "widget":"slider", "min":0, "max":3, "step":0.1}'
     - '// @input float animateSeconds = 0.2 {"hint":"Expand/collapse animation length, seconds", "widget":"slider", "min":0, "max":1, "step":0.05}'
     - '// @ui {"widget":"group_end"}'

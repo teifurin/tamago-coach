@@ -1,12 +1,15 @@
-import { MeshWriter, RGBA, Vec3 } from "./Meshes/MeshKit";
+import { MeshWriter, RGBA, Vec3, litTint, scaleColor } from "./Meshes/MeshKit";
 
 /**
  * TamagoCoachEgg - the egg visuals inside the pan: the flat cooking layer (with the readiness
- * colour cue), the rolled log pushed to the pan's FAR side (three thicknesses) and the six slices.
- * Code-authored MeshBuilder geometry (MeshKit), rebuilt when state changes.
+ * colour / gloss cue), the rolled log pushed to the pan's FAR side (three thicknesses) and the six
+ * slices. Code-authored MeshBuilder geometry (MeshKit), rebuilt when state changes.
  *
- * Owns: RenderMeshVisuals on the authored children EggLayer / EggLog / EggSlices.
- * Expects: `layerObject`, `logObject`, `slicesObject` (authored, named for tests) and `material`.
+ * Owns: RenderMeshVisuals on the authored children EggLayer / EggLog / EggSlices, and a runtime
+ *       clone of `layerMaterial` whose roughness and alpha follow the readiness
+ *       (fresh = glossy, 10 % translucent; set = matte, opaque).
+ * Expects: `layerObject`, `logObject`, `slicesObject` (authored, named for tests), `layerMaterial`
+ *          (EggLayerPBR, blendMode Normal), `logMaterial` (EggLogPBR) and `material` (fallback).
  * Must not: decide when things show - TamagoCoachMain calls the setters below.
  *
  * Local frame: same as the pan floor - origin = centre of the pan floor's top surface,
@@ -40,8 +43,18 @@ export class TamagoCoachEgg extends BaseScriptComponent {
   slicesObject: SceneObject;
 
   @input
-  @hint("Unlit vertex-colour material (vertexBaseColorMaterial)")
+  @hint("Fallback vertex-colour material, used for any part without its own material")
   material: Material;
+
+  @input
+  @allowUndefined
+  @hint("Lit PBR material for the cooking layer (EggLayerPBR, blendMode Normal); cloned at runtime so roughness and alpha can follow readiness")
+  layerMaterial: Material;
+
+  @input
+  @allowUndefined
+  @hint("Lit PBR material for the log and the slices (EggLogPBR, roughness 0.4)")
+  logMaterial: Material;
   @ui.group_end
 
   @ui.separator
@@ -62,20 +75,55 @@ export class TamagoCoachEgg extends BaseScriptComponent {
   @widget(new SliderWidget(0.1, 2, 0.1))
   layerThicknessCm: number = 0.5;
 
-  @input("vec4", "{1.0,0.80,0.12,1}")
-  @hint("Layer colour when just poured (glossy, bright yellow)")
+  @input("vec4", "{1.0,0.78,0.12,1}")
+  @hint("Layer colour when just poured (saturated warm yellow, glossy)")
   @widget(new ColorWidget())
   freshColor: vec4;
 
-  @input("vec4", "{0.98,0.93,0.66,1}")
-  @hint("Layer colour when set and ready to roll (paler, matte)")
+  @input("vec4", "{0.98,0.92,0.66,1}")
+  @hint("Layer colour when set and ready to roll (pale, matte)")
   @widget(new ColorWidget())
   setColor: vec4;
 
-  @input("vec4", "{0.98,0.86,0.36,1}")
-  @hint("Colour of the rolled log and the slices")
+  @input
+  @hint("Layer roughness when just poured (glossy)")
+  @widget(new SliderWidget(0, 1, 0.01))
+  freshRoughness: number = 0.15;
+
+  @input
+  @hint("Layer roughness when set (matte)")
+  @widget(new SliderWidget(0, 1, 0.01))
+  setRoughness: number = 0.8;
+
+  @input
+  @hint("Layer opacity when just poured (1 = opaque); set egg is always opaque")
+  @widget(new SliderWidget(0.5, 1, 0.01))
+  freshAlpha: number = 0.9;
+
+  @input("vec4", "{0.93,0.72,0.22,1}")
+  @hint("Colour of the rolled log and the slices (golden, one step darker than the layer)")
   @widget(new ColorWidget())
   logColor: vec4;
+
+  @input
+  @hint("Number of slightly darker bands around the log along its length (layered look)")
+  @widget(new SliderWidget(0, 6, 1))
+  logBands: number = 4;
+
+  @input
+  @hint("Width of each darker band along X, cm")
+  @widget(new SliderWidget(0.2, 2, 0.1))
+  bandWidthCm: number = 0.6;
+
+  @input
+  @hint("Band brightness relative to the log colour")
+  @widget(new SliderWidget(0.7, 1, 0.01))
+  bandTint: number = 0.9;
+
+  @input
+  @hint("Brightness of the cut faces (the +-X caps) relative to the log colour")
+  @widget(new SliderWidget(1, 1.3, 0.01))
+  cutFaceTint: number = 1.08;
 
   @input
   @hint("Log length along X, cm")
@@ -111,11 +159,17 @@ export class TamagoCoachEgg extends BaseScriptComponent {
   @hint("Gap between slices, cm")
   @widget(new SliderWidget(0, 2, 0.1))
   sliceGapCm: number = 0.4;
+
+  @input
+  @hint("Render order of the translucent layer (drawn after the opaque pan, whatever the hierarchy order)")
+  @widget(new SliderWidget(0, 10, 1))
+  layerRenderOrder: number = 1;
   @ui.group_end
 
   private layerRmv: RenderMeshVisual | null = null;
   private logRmv: RenderMeshVisual | null = null;
   private slicesRmv: RenderMeshVisual | null = null;
+  private layerMat: Material | null = null;
   private readinessStep = -1;
   private rolls = 0;
 
@@ -127,6 +181,12 @@ export class TamagoCoachEgg extends BaseScriptComponent {
     this.layerRmv = this.layerObject.createComponent("Component.RenderMeshVisual") as RenderMeshVisual;
     this.logRmv = this.logObject.createComponent("Component.RenderMeshVisual") as RenderMeshVisual;
     this.slicesRmv = this.slicesObject.createComponent("Component.RenderMeshVisual") as RenderMeshVisual;
+    // The layer is translucent while fresh: draw it after the opaque pan (which sits later in
+    // the hierarchy) so the pan floor shows through instead of the counter.
+    this.layerRmv.renderOrder = Math.round(this.layerRenderOrder);
+    const layerSource = this.layerMaterial || this.material;
+    this.layerMat = layerSource ? layerSource.clone() : null;
+    print("[TamagoCoachEgg] materials layer=" + (this.layerMaterial ? "ok" : "fallback") + " log=" + (this.logMaterial ? "ok" : "fallback") + " base=" + (this.material ? "ok" : "MISSING"));
     this.setReadiness(0);
     this.buildSlices();
     this.layerObject.enabled = false;
@@ -193,10 +253,6 @@ export class TamagoCoachEgg extends BaseScriptComponent {
       f.z + (s.z - f.z) * t,
       1,
     ];
-    // Fresh egg reads "glossy" through a brighter top face; the set egg is flatter/matte.
-    const topBoost = 1.0;
-    const sideTint = 0.78 + 0.1 * t;
-    const tint = (n: Vec3) => (n[1] > 0.5 ? topBoost : n[1] < -0.5 ? 0.6 : sideTint);
     // Layer 1 (no log yet) covers the whole floor. Once a log sits at the far side, the next
     // layer is poured in front of it: from just past the log's near side to the layer's near edge.
     const zNear = this.layerLengthCm / 2;
@@ -209,9 +265,16 @@ export class TamagoCoachEgg extends BaseScriptComponent {
       [-this.layerWidthCm / 2, 0, zFar],
       [this.layerWidthCm / 2, this.layerThicknessCm, zNear],
       c,
-      tint,
+      litTint,
     );
-    w.commit(this.layerRmv, this.material);
+    w.commit(this.layerRmv, this.layerMat || this.material);
+    // Gloss and translucency follow the readiness on the runtime clone (fresh = glossy and
+    // slightly see-through, set = matte and opaque). Only meaningful on the PBR layer material.
+    if (this.layerMat && this.layerMaterial) {
+      const pass = this.layerMat.mainPass;
+      pass.roughness = this.freshRoughness + (this.setRoughness - this.freshRoughness) * t;
+      pass.baseColor = new vec4(1, 1, 1, this.freshAlpha + (1 - this.freshAlpha) * t);
+    }
   }
 
   /** Rebuild the layer at the current readiness (no-op before the first setReadiness). */
@@ -236,8 +299,8 @@ export class TamagoCoachEgg extends BaseScriptComponent {
   private buildLog(radius: number): void {
     if (!this.logRmv) return;
     const w = new MeshWriter();
-    this.cylinderX(w, -this.logLengthCm / 2, this.logLengthCm / 2, radius, this.logAxisZ(radius), radius, 24);
-    w.commit(this.logRmv, this.material);
+    this.cylinderX(w, -this.logLengthCm / 2, this.logLengthCm / 2, radius, this.logAxisZ(radius), radius, 24, Math.max(0, Math.round(this.logBands)));
+    w.commit(this.logRmv, this.logMaterial || this.material);
   }
 
   private buildSlices(): void {
@@ -248,32 +311,50 @@ export class TamagoCoachEgg extends BaseScriptComponent {
     const w = new MeshWriter();
     for (let i = 0; i < n; i++) {
       const x0 = -this.logLengthCm / 2 + i * (sliceLen + this.sliceGapCm);
-      this.cylinderX(w, x0, x0 + sliceLen, r, this.logAxisZ(r), r, 20);
+      this.cylinderX(w, x0, x0 + sliceLen, r, this.logAxisZ(r), r, 20, 0);
     }
-    w.commit(this.slicesRmv, this.material);
+    w.commit(this.slicesRmv, this.logMaterial || this.material);
   }
 
-  /** Cylinder whose axis runs along X from x0 to x1, centred at (cy, cz) in the YZ plane. */
-  private cylinderX(w: MeshWriter, x0: number, x1: number, cy: number, cz: number, r: number, sides: number): void {
+  /**
+   * Cylinder whose axis runs along X from x0 to x1, centred at (cy, cz) in the YZ plane, with
+   * smooth radial normals, `bands` slightly darker rings along its length and lighter cut faces.
+   */
+  private cylinderX(w: MeshWriter, x0: number, x1: number, cy: number, cz: number, r: number, sides: number, bands: number): void {
     const base: RGBA = [this.logColor.x, this.logColor.y, this.logColor.z, 1];
-    const shade = (ny: number): RGBA => {
-      const k = 0.62 + 0.38 * Math.max(0, ny);
-      return [base[0] * k, base[1] * k, base[2] * k, 1];
+    const band = scaleColor(base, this.bandTint);
+    const cap = scaleColor(base, this.cutFaceTint);
+    const len = x1 - x0;
+    const strips: { a: number; b: number; dark: boolean }[] = [];
+    const bw = Math.min(this.bandWidthCm, len / (bands * 2 + 1));
+    let cursor = x0;
+    for (let k = 1; k <= bands; k++) {
+      const centre = x0 + (len * k) / (bands + 1);
+      strips.push({ a: cursor, b: centre - bw / 2, dark: false });
+      strips.push({ a: centre - bw / 2, b: centre + bw / 2, dark: true });
+      cursor = centre + bw / 2;
+    }
+    strips.push({ a: cursor, b: x1, dark: false });
+    const P = (x: number, n: Vec3): Vec3 => [x, cy + r * n[1], cz + r * n[2]];
+    for (const s of strips) {
+      const c = s.dark ? band : base;
+      for (let j = 0; j < sides; j++) {
+        const phi0 = (Math.PI * 2 * j) / sides;
+        const phi1 = (Math.PI * 2 * (j + 1)) / sides;
+        const n0: Vec3 = [0, Math.cos(phi0), Math.sin(phi0)];
+        const n1: Vec3 = [0, Math.cos(phi1), Math.sin(phi1)];
+        w.quad([P(s.a, n0), P(s.b, n0), P(s.b, n1), P(s.a, n1)], [n0, n0, n1, n1], [c, c, c, c]);
+      }
+    }
+    const ring = (x: number): Vec3[] => {
+      const pts: Vec3[] = [];
+      for (let j = 0; j < sides; j++) {
+        const phi = (Math.PI * 2 * j) / sides;
+        pts.push([x, cy + r * Math.cos(phi), cz + r * Math.sin(phi)]);
+      }
+      return pts;
     };
-    const ring0: Vec3[] = [];
-    const ring1: Vec3[] = [];
-    for (let j = 0; j < sides; j++) {
-      const phi = (Math.PI * 2 * j) / sides;
-      ring0.push([x0, cy + r * Math.cos(phi), cz + r * Math.sin(phi)]);
-      ring1.push([x1, cy + r * Math.cos(phi), cz + r * Math.sin(phi)]);
-    }
-    for (let j = 0; j < sides; j++) {
-      const k = (j + 1) % sides;
-      const phiM = (Math.PI * 2 * (j + 0.5)) / sides;
-      const n: Vec3 = [0, Math.cos(phiM), Math.sin(phiM)];
-      w.face([ring0[j], ring1[j], ring1[k], ring0[k]], n, shade(n[1]));
-    }
-    w.face(ring0, [-1, 0, 0], shade(0.3));
-    w.face(ring1, [1, 0, 0], shade(0.3));
+    w.face(ring(x0), [-1, 0, 0], cap);
+    w.face(ring(x1), [1, 0, 0], cap);
   }
 }
