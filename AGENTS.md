@@ -92,7 +92,6 @@ Verify assumptions early — a quick prototype can save hours of debugging a pla
 
 <!-- END Lens Studio managed AGENTS block -->
 
-
 # Tamago Coach: project rules (custom content, outside the managed block)
 
 This is a Lens Studio project for SPECS, built for the Devpost "Learn AR with SPECS" hackathon.
