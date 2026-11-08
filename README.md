@@ -2,7 +2,7 @@
 
 A SPECS (Snap Spectacles) Lens that coaches a beginner through tamagoyaki, the Japanese rolled omelette, hands-free. The cue lives on the pan, not on a screen: the egg shows you when it is ready, an arrow on the pan shows which way to roll, and the roll grows as you go.
 
-Built for the Devpost **Learn AR with SPECS** hackathon. Demo video: 【YouTube link】
+Built for the Devpost **Learn AR with SPECS** hackathon. Demo video: https://youtu.be/K7lrDOghO_E (2:43, recorded in the Lens Studio preview).
 
 ![Roll now: the ring hits zero, the card opens, and the arrow on the pan shows which way to roll](devpost/screenshots/polish1-rollnow.png)
 
