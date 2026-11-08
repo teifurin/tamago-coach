@@ -1,0 +1,54 @@
+- !<AssetImportMetadata/b0c34063-166b-4d63-9bd6-ab8e3c57c35f>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> d17b0bf8-f0c7-4cc5-9fa0-4b7ceb0a25eb
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> d17b0bf8-f0c7-4cc5-9fa0-4b7ceb0a25eb
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> eeb9e9e6-75db-42a4-aeaa-0c618d989ebc
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/eeb9e9e6-75db-42a4-aeaa-0c618d989ebc>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  VersionPrerelease: ""
+  UpdateOrder: 0
+  ComponentUid: 254e3575-c459-4958-aa7d-5cbbd55bbc0b
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    smoothing: false
+    tiltDeg: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - tiltDeg: !<float> 30.000000
+      smoothing: 0.250000
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">TamagoCoachBillboard – yaw-only face the user</span>"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">Settings</span>"}'
+    - '// @ui {"widget":"group_start", "label":"Settings"}'
+    - "// @input float tiltDeg = 30 {\"hint\":\"Tilt toward the user, degrees (the card's top leans away)\", \"widget\":\"slider\", \"min\":0, \"max\":60, \"step\":1}"
+    - '// @input float smoothing = 0.25 {"hint":"Turn smoothing per frame, 0..1 (1 = snap instantly)", "widget":"slider", "min":0.05, "max":1, "step":0.05}'
+    - '// @ui {"widget":"group_end"}'

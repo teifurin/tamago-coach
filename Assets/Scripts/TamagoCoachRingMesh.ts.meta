@@ -1,0 +1,94 @@
+- !<AssetImportMetadata/9d165171-9343-4e73-8dba-5eeaeebf11e0>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 04f8f03d-376a-41eb-bc41-6fc54bbb0711
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 04f8f03d-376a-41eb-bc41-6fc54bbb0711
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> fb898ba5-f6c5-4bbb-b9eb-4691c82189d1
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/fb898ba5-f6c5-4bbb-b9eb-4691c82189d1>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  VersionPrerelease: ""
+  UpdateOrder: 0
+  ComponentUid: 323419dd-8f24-4bea-bb29-34f605a5f33d
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    arcColor: false
+    bandCm: false
+    colliderPaddingCm: false
+    debugCollider: false
+    hoverColor: false
+    material: false
+    outerDiameterCm: false
+    pausedColor: false
+    pulseColor: false
+    pulseScale: false
+    pulseSeconds: false
+    segments: false
+    thicknessCm: false
+    trackColor: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - material: !<reference.Material> 00000000-0000-0000-0000-000000000000
+      outerDiameterCm: !<float> 6.000000
+      bandCm: 0.800000
+      thicknessCm: 0.400000
+      segments: !<float> 64.000000
+      arcColor: !<Vec4> {x: 0.350000, y: 0.850000, z: 1.000000, w: 1.000000}
+      trackColor: !<Vec4> {x: 0.300000, y: 0.330000, z: 0.380000, w: 1.000000}
+      hoverColor: !<Vec4> {x: 0.800000, y: 0.960000, z: 1.000000, w: 1.000000}
+      pausedColor: !<Vec4> {x: 1.000000, y: 0.720000, z: 0.250000, w: 1.000000}
+      pulseColor: !<Vec4> {x: 1.000000, y: 0.800000, z: 0.550000, w: 1.000000}
+      pulseScale: 1.250000
+      pulseSeconds: 0.300000
+      colliderPaddingCm: !<float> 1.000000
+      debugCollider: false
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">TamagoCoachRingMesh – countdown ring geometry</span>"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">References</span>"}'
+    - '// @ui {"widget":"group_start", "label":"References"}'
+    - '// @input Asset.Material material {"hint":"Unlit vertex-colour material (vertexBaseColorMaterial)"}'
+    - '// @ui {"widget":"group_end"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">Settings</span>"}'
+    - '// @ui {"widget":"group_start", "label":"Settings"}'
+    - '// @input float outerDiameterCm = 6 {"hint":"Outer diameter of the ring, cm", "widget":"slider", "min":3, "max":15, "step":0.5}'
+    - '// @input float bandCm = 0.9 {"hint":"Radial width of the band, cm", "widget":"slider", "min":0.2, "max":3, "step":0.1}'
+    - '// @input float thicknessCm = 0.4 {"hint":"Ring thickness along its normal, cm", "widget":"slider", "min":0.1, "max":2, "step":0.1}'
+    - '// @input float segments = 64 {"hint":"Arc resolution (segments around the full circle)", "widget":"slider", "min":16, "max":128, "step":1}'
+    - '// @input vec4 arcColor = "{1.0,0.78,0.2,1}" {"hint":"Colour of the remaining-time arc (yolk)", "widget":"color"}'
+    - '// @input vec4 trackColor = "{0.32,0.32,0.32,1}" {"hint":"Colour of the elapsed full-circle track (30 % white reads as faint white on the additive display)", "widget":"color"}'
+    - '// @input vec4 hoverColor = "{1.0,0.9,0.5,1}" {"hint":"Arc colour while a hand/cursor aims at the ring", "widget":"color"}'
+    - '// @input vec4 pausedColor = "{1.0,0.62,0.2,1}" {"hint":"Arc colour while the countdown is paused", "widget":"color"}'
+    - '// @input vec4 pulseColor = "{1.0,0.80,0.55,1}" {"hint":"Track and arc colour at the peak of the Done colour pulse (warm)", "widget":"color"}'
+    - '// @input float pulseScale = 1.25 {"hint":"Peak scale of one pulse at zero", "widget":"slider", "min":1, "max":2, "step":0.05}'
+    - '// @input float pulseSeconds = 0.3 {"hint":"Duration of one pulse, seconds", "widget":"slider", "min":0.1, "max":1, "step":0.05}'
+    - '// @input float colliderPaddingCm = 1 {"hint":"Extra collider size around the ring so it is easy to pinch, cm", "widget":"slider", "min":0, "max":6, "step":0.5}'
+    - '// @input bool debugCollider {"hint":"Draw the collider as a wireframe for hit-zone diagnosis"}'
+    - '// @ui {"widget":"group_end"}'

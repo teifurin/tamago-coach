@@ -1,0 +1,100 @@
+- !<AssetImportMetadata/bcb94a3a-43d0-487c-8b52-d88e10f1b6e4>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 2ee9accf-f214-4251-aaec-4ef660da4499
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 2ee9accf-f214-4251-aaec-4ef660da4499
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 59fb1cf5-b237-412f-8877-5be3d3c8e22e
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/59fb1cf5-b237-412f-8877-5be3d3c8e22e>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  VersionPrerelease: ""
+  UpdateOrder: 0
+  ComponentUid: 960dcf66-1130-4ea7-819c-ed765977345a
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    cardCollapseSeconds: false
+    cardUI: false
+    chimeAudio: false
+    controlsUI: false
+    debugBounds: false
+    demoAtStart: false
+    demoSpeedFactor: false
+    donePulseSeconds: false
+    egg: false
+    pulseCount: false
+    ringMesh: false
+    ringUI: false
+    rollArrow: false
+    spatialChime: false
+    startAtStep: false
+    steam: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - cardUI: !<MappingBased.AssignableType_1> 00000000-0000-0000-0000-000000000000
+      ringUI: !<MappingBased.AssignableType_2> 00000000-0000-0000-0000-000000000000
+      controlsUI: !<MappingBased.AssignableType_3> 00000000-0000-0000-0000-000000000000
+      ringMesh: !<MappingBased.AssignableType_4> 00000000-0000-0000-0000-000000000000
+      egg: !<MappingBased.AssignableType_5> 00000000-0000-0000-0000-000000000000
+      rollArrow: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      chimeAudio: !<reference.AudioComponent> 00000000-0000-0000-0000-000000000000
+      steam: !<MappingBased.AssignableType_6> 00000000-0000-0000-0000-000000000000
+      demoSpeedFactor: !<float> 10.000000
+      cardCollapseSeconds: !<float> 6.000000
+      demoAtStart: false
+      startAtStep: !<float> 0.000000
+      pulseCount: !<float> 3.000000
+      donePulseSeconds: 0.600000
+      spatialChime: true
+      debugBounds: false
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">TamagoCoachMain – step and timer state machine</span>"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">References</span>"}'
+    - '// @ui {"widget":"group_start", "label":"References"}'
+    - '// @input AssignableType_1 cardUI {"hint":"Step card UI module (StepCard / TamagoCoachCardUI)"}'
+    - '// @input AssignableType_2 ringUI {"hint":"Ring text UI module (RingText / TamagoCoachRingUI)"}'
+    - '// @input AssignableType_3 controlsUI {"hint":"Next / Back / Demo x10 UI module (Controls / TamagoCoachControlsUI)"}'
+    - '// @input AssignableType_4 ringMesh {"hint":"Timer ring geometry + pinch (TimerRing / TamagoCoachRingMesh)"}'
+    - '// @input AssignableType_5 egg {"hint":"Egg visuals (Egg / TamagoCoachEgg)"}'
+    - '// @input SceneObject rollArrow {"hint":"The roll arrow SceneObject (enabled only during a roll cue)"}'
+    - '// @input Component.AudioComponent chimeAudio {"hint":"AudioComponent on ChimeAudio (at the pan); drop a WAV on it if none is set"}'
+    - '// @input AssignableType_6 steam {"hint":"Steam wisps over the pan (Steam / TamagoCoachSteam); shown only while the Heat countdown runs"}'
+    - '// @ui {"widget":"group_end"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">Settings</span>"}'
+    - '// @ui {"widget":"group_start", "label":"Settings"}'
+    - '// @input float demoSpeedFactor = 10 {"hint":"Timer speed multiplier while Demo x10 is on", "widget":"slider", "min":2, "max":20, "step":1}'
+    - '// @input float cardCollapseSeconds = 6 {"hint":"Seconds after a countdown starts before the card collapses to ring + title (scaled by Demo)", "widget":"slider", "min":0, "max":30, "step":0.5}'
+    - '// @input bool demoAtStart {"hint":"Start with Demo x10 on"}'
+    - '// @input float startAtStep {"hint":"0-based step to open at start (0 = Prep); a later step starts with the earlier layers already rolled - useful for testing", "widget":"slider", "min":0, "max":5, "step":1}'
+    - '// @input float pulseCount = 3 {"hint":"Number of ring pulses at zero", "widget":"slider", "min":1, "max":6, "step":1}'
+    - '// @input float donePulseSeconds = 0.6 {"hint":"Length of the warm Done pulse (card accent line and timer ring flash once), seconds", "widget":"slider", "min":0.2, "max":5, "step":0.1}'
+    - '// @input bool spatialChime = true {"hint":"Play the chime as spatial audio at the pan (creates a runtime audio listener that follows the head)"}'
+    - '// @input bool debugBounds {"hint":"Print the world bounds of every mesh under this object 1 s after start (layout check)"}'
+    - '// @ui {"widget":"group_end"}'

@@ -1,0 +1,88 @@
+- !<AssetImportMetadata/ac7f2034-d448-4d9c-ad62-7c778ecd2074>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> dac9e7c2-c026-400a-9305-b8ab5b24fef9
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> dac9e7c2-c026-400a-9305-b8ab5b24fef9
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 760d524a-c89c-4cc2-9226-e0fb1e1d021e
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/760d524a-c89c-4cc2-9226-e0fb1e1d021e>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  VersionPrerelease: ""
+  UpdateOrder: 0
+  ComponentUid: 67579fbd-bc95-4f9d-b9fd-3783164736bb
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    bevelTint: false
+    bottomTint: false
+    chamferCm: false
+    color: false
+    depthCm: false
+    gridX: false
+    gridZ: false
+    material: false
+    noisePercent: false
+    sideTint: false
+    thicknessCm: false
+    widthCm: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - material: !<reference.Material> 00000000-0000-0000-0000-000000000000
+      widthCm: !<float> 50.000000
+      depthCm: !<float> 35.000000
+      thicknessCm: !<float> 2.000000
+      color: !<Vec4> {x: 0.800000, y: 0.770000, z: 0.720000, w: 1.000000}
+      chamferCm: 0.500000
+      noisePercent: !<float> 4.000000
+      gridX: !<float> 10.000000
+      gridZ: !<float> 7.000000
+      sideTint: 0.860000
+      bevelTint: 0.930000
+      bottomTint: 0.800000
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">TamagoCoachCounterMesh – counter slab</span>"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">References</span>"}'
+    - '// @ui {"widget":"group_start", "label":"References"}'
+    - '// @input Asset.Material material {"hint":"Lit vertex-colour PBR material (CounterPBR: Vertex Color = Base Color, roughness 0.75)"}'
+    - '// @ui {"widget":"group_end"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">Settings</span>"}'
+    - '// @ui {"widget":"group_start", "label":"Settings"}'
+    - '// @input float widthCm = 50 {"hint":"Slab width along X, cm", "widget":"slider", "min":20, "max":120, "step":1}'
+    - '// @input float depthCm = 35 {"hint":"Slab depth along Z (near-far), cm", "widget":"slider", "min":20, "max":100, "step":1}'
+    - '// @input float thicknessCm = 2 {"hint":"Slab thickness along Y, cm (extends below the counter top)", "widget":"slider", "min":0.5, "max":10, "step":0.5}'
+    - '// @input vec4 color = "{0.80,0.68,0.52,1}" {"hint":"Slab colour, light wood (keep it light: black is transparent on Specs)", "widget":"color"}'
+    - '// @input float chamferCm = 0.5 {"hint":"Chamfer (bevel) along the top edges, cm", "widget":"slider", "min":0, "max":2, "step":0.1}'
+    - '// @input float noisePercent = 4 {"hint":"Per-vertex brightness noise on the top face, +- percent", "widget":"slider", "min":0, "max":15, "step":0.5}'
+    - '// @input float gridX = 10 {"hint":"Top face tessellation along X (cells)", "widget":"slider", "min":1, "max":40, "step":1}'
+    - '// @input float gridZ = 7 {"hint":"Top face tessellation along Z (cells)", "widget":"slider", "min":1, "max":40, "step":1}'
+    - '// @input float sideTint = 0.86 {"hint":"Brightness of the vertical sides relative to the top", "widget":"slider", "min":0.5, "max":1, "step":0.01}'
+    - '// @input float bevelTint = 0.93 {"hint":"Brightness of the chamfer strip relative to the top", "widget":"slider", "min":0.5, "max":1, "step":0.01}'
+    - '// @input float bottomTint = 0.8 {"hint":"Brightness of the underside relative to the top", "widget":"slider", "min":0.3, "max":1, "step":0.01}'
+    - '// @ui {"widget":"group_end"}'
