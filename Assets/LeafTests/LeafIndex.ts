@@ -7,6 +7,9 @@ import { TC04RollCueScenario } from "./TC04RollCueScenario";
 import { TC05GrabDragScenario } from "./TC05GrabDragScenario";
 import { TC06IkReachNextScenario } from "./TC06IkReachNextScenario";
 import { TC07DemoSpeedApiScenario } from "./TC07DemoSpeedApiScenario";
+import { DemoTourScenario } from "./DemoTourScenario";
+import { DemoGrabScenario } from "./DemoGrabScenario";
+import { DemoCameraScenario } from "./DemoCameraScenario";
 
 /**
  * LeafIndex - registers the Tamago Coach LEAF scenarios (one per done criterion of the design
@@ -23,5 +26,9 @@ export class LeafIndex extends BaseScriptComponent {
     { id: "tc-05-grab-drag", typename: TC05GrabDragScenario.getTypeName() },
     { id: "tc-06-ik-reach-next", typename: TC06IkReachNextScenario.getTypeName() },
     { id: "tc-07-demo-speed-api", typename: TC07DemoSpeedApiScenario.getTypeName() },
+    // Video-capture demos (no assertions): see DemoTourScenario / DemoGrabScenario.
+    { id: "demo-tour", typename: DemoTourScenario.getTypeName() },
+    { id: "demo-grab", typename: DemoGrabScenario.getTypeName() },
+    { id: "demo-camera", typename: DemoCameraScenario.getTypeName(), parameters: { mode: "orbit", moveSeconds: "8", holdSeconds: "1", startPitchDeg: "6" } },
   ];
 }

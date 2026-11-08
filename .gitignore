@@ -41,3 +41,6 @@ agent/
 
 # Added by Lens Studio (LEAF plugin)
 leaf_plugin_settings.json
+
+# Raw video captures for the demo (not part of the project)
+devpost/video/

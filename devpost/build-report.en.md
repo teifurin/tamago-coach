@@ -56,6 +56,10 @@ Round two added kitchen context and feedback, again with no colliders or interac
 
 Screenshots: `screenshots/polish2-prep.png`, `polish2-heat-steam.png`, `polish2-done-pulse.png`.
 
+## Demo video
+
+The footage is the Lens Studio preview, captured with ffmpeg from the Preview panel while three extra LEAF scenarios drove the Lens: `DemoTourScenario` walks the six steps with the pauses the video needs, `DemoGrabScenario` drags the grab bar, and `DemoCameraScenario` moves the preview camera for the reveal and the walk-around. They have no assertions and are registered in `LeafIndex.ts` next to the seven tests. The narration is text-to-speech (Gemini TTS); the chime in the video is the Lens's own `ChimeSoft.wav` placed at the countdown zeros. No SPECS device was used.
+
 ## Known limitations
 
 - Next and Back are pinched through the hand ray, not touched directly (76 cm from the head).

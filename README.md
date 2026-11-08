@@ -28,6 +28,8 @@ No SPECS glasses are needed.
 
 `Assets/LeafTests/` holds seven LEAF scenarios: one for each done criterion in the design brief, an IK reachability check for the Next button, and a regression test for the Demo switch. Run them from the LEAF panel in Lens Studio. All seven pass.
 
+Three more scenarios (`DemoTour`, `DemoGrab`, `DemoCamera`) have no assertions: they drive the Lens for the demo video, which was captured from the Lens Studio preview.
+
 ## How it was built
 
 - Planned with the Devpost Learn skill pack. `plan-lens` interviewed the author and wrote [`devpost/design-brief.md`](devpost/design-brief.md).
