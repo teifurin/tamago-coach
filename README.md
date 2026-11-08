@@ -47,4 +47,4 @@ Three more scenarios (`DemoTour`, `DemoGrab`, `DemoCamera`) have no assertions: 
 
 ## License
 
-【待定】
+MIT for this project's own code and assets; see [`LICENSE`](LICENSE). The third-party packages in `Packages/` (Spectacles Interaction Kit, Spectacles UI Kit, Leaf, Bitmoji 3D) and the `Assets/SimpleVertexBaseColor.lspkg` material from the CLAD plugin keep their own licenses.
